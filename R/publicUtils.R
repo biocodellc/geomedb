@@ -11,5 +11,11 @@ library(RCurl)
 #
 # parameter: url = ark identifier with resolver (e.g. http://n2t.net/ark:/21547/lN2)
 graphData <- function(url) {
-  return (read.delim(textConnection(getURLContent(url,followLocation=TRUE)),header=TRUE,sep="\t"))
+  graph <-read.delim(textConnection(RCurl::getURLContent(url,followLocation=TRUE)),header=TRUE,sep="\t")
+ # hard-code some column names
+  mysub<-subset(graph,,
+                 select = c(materialSampleID,principalInvestigator,locality,decimalLatitude,decimalLongitude,genus,species)
+                )
+  return(mysub)
 }
+
