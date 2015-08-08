@@ -83,6 +83,7 @@ concatenateProjectGraphs <- function(vars) {
 # assumes there is a header and it is tab delimited
 #
 # parameter: url = ark identifier with resolver (e.g. http://n2t.net/ark:/21547/lN2)
+# TODO: Make the select call below handle a user specified list of columns
 graphData <- function(url) {
   graph <-read.delim(textConnection(RCurl::getURLContent(url,followLocation=TRUE)),header=TRUE,sep="\t")
  # hard-code some column names
