@@ -6,8 +6,7 @@
 # gotten to work all the way.
 
 # Make RCurl package is loaded
-library(RCurl)
-library(jsonlite)
+
 
 # Location of login URL
 fimsLoginServiceURL <- "http://biscicol.org/id/authenticationService/login"
@@ -19,6 +18,8 @@ cookies_file <- "/tmp/cookies.txt"
 # Must call this first!
 # authenticate, necessary to fetch data which is private
 authenticate <- function(user,pass,pProject_id) {
+  library(RCurl)
+  library(jsonlite)
   curl <- getCurlHandle()
   opts <- curlSetOpt(cookiejar=cookies_file, curl=curl)
   postdata <- postForm(fimsLoginServiceURL,
@@ -68,11 +69,25 @@ concatenateProjectGraphs <- function(vars) {
     }
 
     # TESTING
-    if (counter == 3) {
-      return(mytempdata)
-    }
+    #if (counter == 3) {
+    #  return(mytempdata)
+    #}
 
     counter <- counter + 1
   }
   return(mytempdata)
+}
+
+# Function to fetch FIMS data from service using ARK Identifier
+# Uses RCurl (libcurl) to fetch so we can follow re-directs
+# assumes there is a header and it is tab delimited
+#
+# parameter: url = ark identifier with resolver (e.g. http://n2t.net/ark:/21547/lN2)
+graphData <- function(url) {
+  graph <-read.delim(textConnection(RCurl::getURLContent(url,followLocation=TRUE)),header=TRUE,sep="\t")
+ # hard-code some column names
+  mysub<-subset(graph,,
+                 select = c(materialSampleID,principalInvestigator,locality,decimalLatitude,decimalLongitude,genus,species)
+                )
+  return(mysub)
 }
