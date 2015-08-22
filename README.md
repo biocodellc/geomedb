@@ -15,9 +15,7 @@ install_github("dipnet/fimsR-access")
 library(fims)
 ```
 
-Now, to use the FIMS package in R you need to at least authenticate, like so:
-
-You must first authenticate (obtain user/pass from project admin)
+Now, to use the FIMS package in R you need to at least authenticate, obtaining the username and password from the project administrator:
 ```
 auth<-authentication("user","pass",25)
 ```
