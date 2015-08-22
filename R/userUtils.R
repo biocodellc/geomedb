@@ -5,22 +5,22 @@
 # This script is not fully tested.  In particular, the cookies in curl aspect i haven't
 # gotten to work all the way.
 
-# Make RCurl package is loaded
-
-
 # Location of login URL
 fimsLoginServiceURL <- "http://biscicol.org/id/authenticationService/login"
 
 # Set your cookies file, may need to adjust
 cookies_file <- "/tmp/cookies.txt"
 
-
 # Must call this first!
 # authenticate, necessary to fetch data which is private
 authenticate <- function(user,pass,pProject_id) {
+  # load necessary libraries
   library(RCurl)
   library(jsonlite)
+  
   curl <- getCurlHandle()
+  
+  # species cookies file for authentication
   opts <- curlSetOpt(cookiejar=cookies_file, curl=curl)
   postdata <- postForm(fimsLoginServiceURL,
            username=user,
@@ -40,6 +40,7 @@ authenticate <- function(user,pass,pProject_id) {
 # Get a list of Dipnet graphs
 listProjectGraphs <- function(vars) {
   # this URL returns all the graphs for the DIPNet project
+  # IN ORDER TO GET THE PROPER LIST OF ALL GRAPHS (NON-PUBLIC PLUS PUBLIC NEED TO PASS in ACCESS TOKEN)
   project_graphs_url <- paste("http://biscicol.org/id/projectService/graphs/",vars$project_id,sep="")
   # Get the all of the graphs of this project, coming back as JSON
   graphsJson <- getURLContent(project_graphs_url,followLocation=TRUE,cookiefile=cookies_file)
