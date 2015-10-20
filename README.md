@@ -17,7 +17,7 @@ library(fims)
 
 Now, to use the FIMS package in R you need to at least authenticate, obtaining the username and password from the project administrator:
 ```
-auth<-authentication("user","pass",25)
+auth<-authenticate("user","pass",25)
 ```
 
 The most common request will likely be getting all the graphs into one.  This function loads all graphs from specified
