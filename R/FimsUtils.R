@@ -48,14 +48,14 @@ listExpeditions <- function() {
 #' fetch the FimsMetadata from the dipnet database
 #'
 #' @param expeditions list of expeditions to include in the query. The default is all expeditions
-#' @param filters     named list of column:value pairs to filter the results by
-query <- function(expeditions=list()) {
+#' @param names       list of column names to include in the data.frame results
+query <- function(expeditions=list(), names=NULL) {
     query.params = ""
 
     if (length(expeditions) > 0) {
-        names <- rep("expeditions", length(expeditions))
+        expedition.names <- rep("expeditions", length(expeditions))
         # for each expeditionCode in list create a post param expeditions={expeditionCode} joining with &
-        expedition.params <- paste0(names, "=", expeditions, collapse="&")
+        expedition.params <- paste0(expedition.names, "=", expeditions, collapse="&")
         query.params <- paste0(query.params, expedition.params)
     }
 
@@ -67,5 +67,24 @@ query <- function(expeditions=list()) {
 
     stop_for_status(r)
 
-    return(read.csv(text=content(r, "text", encoding = "ISO-8859-1")))
+    df <- read.csv(text=content(r, "text", encoding = "ISO-8859-1"))
+
+    if (!is.null(names)) {
+        df.names = names(df)
+        df.remove = list()
+
+        for (name in names) {
+            if (!is.element(name, df.names)) {
+                stop(paste("The given column name (", name, ") does not exist in the query results"))
+            }
+        }
+
+        for (col in df.names) {
+            if (!is.element(col, name)) {
+                df[[col]] <- NULL
+            }
+        }
+    }
+
+    return(df)
 }
