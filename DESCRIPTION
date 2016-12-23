@@ -2,12 +2,10 @@ Package: fims
 Type: Package
 Title: Helpful scripts for working with FIMS data in R
 Version: 0.1
-Date: 2015-08-07
+Date: 2016-12-23
 Author: John Deck
 Maintainer: John Deck <jdeck88@gmail.com>
 Description: Services for fetching Field Information Management System Data
 License: What license is it under?
 LazyData: TRUE
-imports:
- RCurl,
- jsonlite
+Depends: httr

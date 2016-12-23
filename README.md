@@ -2,10 +2,8 @@
 A set of R scripts for accessing and working with FIMS data from R
 
 Big Gaps in this package:
-1) Currently the FIMS only stores metadata and NOT sequences (will fix this soon).  
-2) The function that fetches graphs uses a hard-coded list of column
-names to fetch for (materialSampleID,principalInvestigator,locality,decimalLatitude,decimalLongitude,genus,species).  
-(will fix this as well)
+1) Currently only return FIMS Metadata, not sequences 
+2) Currently can only filter the results by expeditionCode, will add more query functionality soon
 
 Installation of FIMSR-access package from github
 ```
@@ -17,13 +15,18 @@ library(fims)
 
 Now, to use the FIMS package in R you need to at least authenticate, obtaining the username and password from the project administrator:
 ```
-auth<-authenticate("user","pass",25)
+authenticate("user", "pass")
 ```
 
-The most common request will likely be getting all the graphs into one.  This function loads all graphs from specified
-project into one data.frame.  It will likely take some time but will give you the status as it is fetching data.  YOu will want to use some other function to cache the returned data so you don't need to do this too often.
+The query function will execute a query against the fims database. It currently accepts a optional list of expeditionCodes to
+filter the query with. The results are returned as a data.frame
 ```
-allgraphs<-concatenateProjectGraphs(auth)
+df <- query(expeditions=list("TEST"))
+```
+
+You can fetch a list of expeditionCodes that are available to query:
+```
+expeditionsList <- listExpeditions()
 ```
 
 
