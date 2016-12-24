@@ -49,7 +49,9 @@ listExpeditions <- function() {
 #'
 #' @param expeditions list of expeditions to include in the query. The default is all expeditions
 #' @param names       list of column names to include in the data.frame results
-query <- function(expeditions=list(), names=NULL) {
+#' @param filters     list of "column name":"value" pairs to include in the query. The special column name "_all" will do
+#'                    a full text search in all columns for the value
+query <- function(expeditions=list(), filters=list(), names=NULL) {
     query.params = ""
 
     if (length(expeditions) > 0) {
@@ -57,6 +59,17 @@ query <- function(expeditions=list(), names=NULL) {
         # for each expeditionCode in list create a post param expeditions={expeditionCode} joining with &
         expedition.params <- paste0(expedition.names, "=", expeditions, collapse="&")
         query.params <- paste0(query.params, expedition.params)
+    }
+
+    if (length(filters) > 0) {
+        # for each name in list create a post param name=value joining with &
+        filter.params <- paste0(names(filters), "=", unname(filters), collapse="&")
+
+        if (nchar(query.params) > 0) {
+            query.params <- paste0(query.params, "&", filter.params)
+        } else {
+            query.params <- paste0(query.params, filter.params)
+        }
     }
 
     r <- POST(fimsQueryUrl,
@@ -80,7 +93,7 @@ query <- function(expeditions=list(), names=NULL) {
         }
 
         for (col in df.names) {
-            if (!is.element(col, name)) {
+            if (!is.element(col, names)) {
                 df[[col]] <- NULL
             }
         }

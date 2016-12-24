@@ -18,10 +18,30 @@ Now, to use the FIMS package in R you need to at least authenticate, obtaining t
 authenticate("user", "pass")
 ```
 
-The query function will execute a query against the fims database. It currently accepts a optional list of expeditionCodes to
-filter the query with. The results are returned as a data.frame
+The query function will execute a query against the fims database. The results are returned as a data.frame
+The most basic query will return all the samples in the database:
 ```
-df <- query(expeditions=list("TEST"))
+df <- query()
+```
+
+The following query will return all samples for the expeditions "TEST" and "TEST2"
+```
+df <- query(expeditions=list("TEST", "TEST2))
+```
+
+The following query will the return "materialSampleID" and "bcid" columns for all samples.
+```
+df <- query(names=list("materialSampleID", "bcid))
+```
+
+The following query will the return "materialSampleID" and "bcid" columns for all samples where a full text search matches "Chordata"
+```
+df <- query(names=list("materialSampleID", "bcid), filters=list("_all"="Chordata")
+```
+
+The following query will the return "materialSampleID" and "bcid" columns for the samples in "TEST" expeditions where "yearCollected" = 2008
+```
+df <- query(expeditions=list("TEST"), names=list("materialSampleID", "bcid), filters=list(yearCollected="2008")
 ```
 
 You can fetch a list of expeditionCodes that are available to query:
