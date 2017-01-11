@@ -3,14 +3,10 @@
 # BETA!
 # This is a utility script for DIPNet users to query the FIMS database for analysis in R
 
-# load necessary libraries
-library(httr)
-
 # CONSTANTS
 projectId <- 25
 
-#fimsRestRoot <- "http://biscicol.org/dipnet/rest"
-fimsRestRoot <- "http://localhost:8080/dipnet/rest"
+fimsRestRoot <- "http://biscicol.org/dipnet/rest"
 fimsLoginServiceUrl  <- paste(fimsRestRoot, "authenticationService", "login", sep="/")
 fimsProjectExpeditionsUrl <- paste(fimsRestRoot, "projects", projectId, "expeditions", sep="/")
 fimsQueryUrl <- paste(fimsRestRoot, "projects", "query", "csv", sep="/")
@@ -21,7 +17,7 @@ fimsFastaQueryUrl <- paste(fimsRestRoot, "projects", "query", "fasta", sep="/")
 #' @export
 authenticate <- function(user, pass) {
 
-    r <- POST(fimsLoginServiceUrl,
+    r <- httr::POST(fimsLoginServiceUrl,
             body=list(
                     username=user,
                     password=pass
@@ -29,19 +25,19 @@ authenticate <- function(user, pass) {
             encode="form"
             )
 
-    stop_for_status(r)
+    httr::stop_for_status(r)
 }
 
 #' get a list of expeditions to query against
 #' @export
 listExpeditions <- function() {
 
-    r <- GET(fimsProjectExpeditionsUrl)
-    stop_for_status(r)
+    r <- httr::GET(fimsProjectExpeditionsUrl)
+    httr::stop_for_status(r)
 
     expeditions <- list()
 
-    for (e in content(r)) {
+    for (e in httr::content(r)) {
         expeditions[[length(expeditions) + 1]] <- e$expeditionCode
     }
 
@@ -58,15 +54,15 @@ listExpeditions <- function() {
 queryMetadata <- function(expeditions=list(), filters=list(), names=NULL) {
     query.params <- prepareQueryParams(expeditions, filters)
 
-    r <- POST(fimsQueryUrl,
+    r <- httr::POST(fimsQueryUrl,
             body=I(query.params),
             encode="form",
-            content_type("application/x-www-form-urlencoded")
+            httr::content_type("application/x-www-form-urlencoded")
             )
 
-    stop_for_status(r)
+    httr::stop_for_status(r)
 
-    df <- read.csv(text=content(r, "text", encoding = "ISO-8859-1"))
+    df <- read.csv(text=httr::content(r, "text", encoding = "ISO-8859-1"))
 
     if (!is.null(names)) {
         df.names = names(df)
@@ -128,17 +124,17 @@ queryFasta <- function(marker, expeditions=list(), filters=list()) {
         query.params <- paste0(query.params, "fastaSequence.urn:marker=", marker)
     }
 
-    r <- POST(fimsFastaQueryUrl,
+    r <- httr::POST(fimsFastaQueryUrl,
         body=I(query.params),
         encode="form",
-        content_type("application/x-www-form-urlencoded")
+        httr::content_type("application/x-www-form-urlencoded")
     )
 
-    stop_for_status(r)
+    httr::stop_for_status(r)
 
     temp <- tempfile()
 
-    writeBin(content(r, "raw"), temp)
+    writeBin(httr::content(r, "raw"), temp)
 
     unzip(temp, files="dipnet-fims-output.fasta")
 
@@ -147,5 +143,5 @@ queryFasta <- function(marker, expeditions=list(), filters=list()) {
         return()
     }
 
-    return(fasta2DNAbin("dipnet-fims-output.fasta"))
+    return(adegenet::fasta2DNAbin("dipnet-fims-output.fasta"))
 }

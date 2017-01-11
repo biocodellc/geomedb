@@ -9,6 +9,6 @@ Description: Services for fetching Field Information Management System Data
 License: What license is it under?
 LazyData: TRUE
 Imports:
-    httr,
-    adegenet
+    adegenet,
+    httr
 RoxygenNote: 5.0.1
