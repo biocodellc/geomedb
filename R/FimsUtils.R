@@ -6,11 +6,12 @@
 # CONSTANTS
 projectId <- 25
 
-fimsRestRoot <- "http://biscicol.org/dipnet/rest"
+fimsRestRoot <- "http://biscicol.org/dipnet/rest/v1.1"
 fimsLoginServiceUrl  <- paste(fimsRestRoot, "authenticationService", "login", sep="/")
 fimsProjectExpeditionsUrl <- paste(fimsRestRoot, "projects", projectId, "expeditions", sep="/")
 fimsQueryUrl <- paste(fimsRestRoot, "projects", "query", "csv", sep="/")
 fimsFastaQueryUrl <- paste(fimsRestRoot, "projects", "query", "fasta", sep="/")
+fimsFastaMarkersUrl <- paste(fimsRestRoot, "projects", projectId, "config", "lists", "markers", "fields", sep="/")
 
 #' Must call this first!
 #' authenticate, necessary to fetch data which is private
@@ -42,6 +43,22 @@ listExpeditions <- function() {
     }
 
     return(expeditions)
+}
+
+#' get a list of markers to query against
+#' @export
+listMarkers <- function() {
+
+    r <- httr::GET(fimsFastaMarkersUrl)
+    httr::stop_for_status(r)
+
+    markers <- list()
+
+    for (f in httr::content(r)) {
+        markers[[length(markers) + 1]] <- f$value
+    }
+
+    return(markers)
 }
 
 #' fetch the FimsMetadata from the dipnet database
