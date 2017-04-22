@@ -9,4 +9,9 @@ listExpeditions()
 \description{
 get a list of expeditions to query against
 }
+\examples{
+\dontrun{
+expeditions <- listExpeditions()
+}
+}
 

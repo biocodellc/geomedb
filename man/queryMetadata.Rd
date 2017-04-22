@@ -2,19 +2,26 @@
 % Please edit documentation in R/FimsUtils.R
 \name{queryMetadata}
 \alias{queryMetadata}
-\title{fetch the FimsMetadata from the dipnet database}
+\title{fetch the FimsMetadata from the geome-db database}
 \usage{
-queryMetadata(expeditions = list(), filters = list(), names = NULL)
+queryMetadata(expeditions = list(), query = "", names = NULL)
 }
 \arguments{
 \item{expeditions}{list of expeditions to include in the query. The default is all expeditions}
 
-\item{filters}{list of "column name":"value" pairs to include in the query. The special column name "_all" will do
-a full text search in all columns for the value}
+\item{query}{FIMS Query DSL (http://fims.readthedocs.io/en/latest/fims/query.html) query string.
+Ex. '+locality:fuzzy +country:"exact phrase"'}
 
 \item{names}{list of column names to include in the data.frame results}
 }
 \description{
-fetch the FimsMetadata from the dipnet database
+fetch the FimsMetadata from the geome-db database
+}
+\examples{
+\dontrun{
+df <- queryMetadata(expeditions=list("TEST", "TEST2"))
+df <- queryMetadata(names=list("materialSampleID", "bcid"), query="Chordata")
+df <- queryMetadata(expeditions=list("TEST"), names=list("bcid"), query="+yearCollected:2008")
+}
 }
 

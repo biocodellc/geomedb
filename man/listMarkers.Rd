@@ -9,4 +9,9 @@ listMarkers()
 \description{
 get a list of markers to query against
 }
+\examples{
+\dontrun{
+markers <- listMarkers()
+}
+}
 

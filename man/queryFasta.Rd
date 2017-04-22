@@ -2,19 +2,24 @@
 % Please edit documentation in R/FimsUtils.R
 \name{queryFasta}
 \alias{queryFasta}
-\title{fetch Fasta sequences from the dipnet database}
+\title{fetch Fasta sequences from the geome-db database}
 \usage{
-queryFasta(marker, expeditions = list(), filters = list())
+queryFasta(marker, expeditions = list(), query = "")
 }
 \arguments{
 \item{marker}{the marker to fetch}
 
 \item{expeditions}{list of expeditions to include in the query. The default is all expeditions}
 
-\item{filters}{list of "column name":"value" pairs to include in the query. The special column name "_all" will do
-a full text search in all columns for the value}
+\item{query}{FIMS Query DSL (http://fims.readthedocs.io/en/latest/fims/query.html) query string.
+Ex. '+locality:fuzzy +country:"exact phrase"'}
 }
 \description{
-fetch Fasta sequences from the dipnet database
+fetch Fasta sequences from the geome-db database
+}
+\examples{
+\dontrun{
+fasta <- queryFasta("C01", expeditions=list("TEST"), query="+yearCollected:2008")
+}
 }
 

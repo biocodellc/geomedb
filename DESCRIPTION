@@ -1,14 +1,16 @@
-Package: fims
+Package: geomedb
 Type: Package
-Title: Helpful scripts for working with FIMS data in R
+Title: Functions for Fetching Geome-db FIMS Data
 Version: 0.1
-Date: 2016-12-23
-Author: John Deck
-Maintainer: John Deck <jdeck88@gmail.com>
-Description: Services for fetching Field Information Management System Data
-License: What license is it under?
+Date: 2017-04-22
+Author: RJ Ewing
+Maintainer: RJ Ewing<ewing.rj@gmail.com>
+Description: This package provides functions for fetching geome-db data (http://www.geome-db.org) for analysis in R.
+License: GPL-3
 LazyData: TRUE
 Imports:
     adegenet,
     httr
+Depends:
+    utils
 RoxygenNote: 5.0.1
