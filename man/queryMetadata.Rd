@@ -9,7 +9,7 @@ queryMetadata(expeditions = list(), query = "", names = NULL)
 \arguments{
 \item{expeditions}{list of expeditions to include in the query. The default is all expeditions}
 
-\item{query}{FIMS Query DSL (http://fims.readthedocs.io/en/latest/fims/query.html) query string.
+\item{query}{FIMS Query DSL \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
 Ex. '+locality:fuzzy +country:"exact phrase"'}
 
 \item{names}{list of column names to include in the data.frame results}

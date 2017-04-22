@@ -5,7 +5,9 @@ Version: 0.1
 Date: 2017-04-22
 Author: RJ Ewing
 Maintainer: RJ Ewing<ewing.rj@gmail.com>
-Description: This package provides functions for fetching geome-db data (http://www.geome-db.org) for analysis in R.
+Description: This package provides functions for fetching geome-db data for analysis in R.
+URL: http://www.geome-db.org, https://github.com/DIPnet/fimsR-access
+BugReports: https://github.com/DIPnet/fimsR-access/issues
 License: GPL-3
 LazyData: TRUE
 Imports:

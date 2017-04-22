@@ -55,7 +55,7 @@ listMarkers <- function() {
 #'
 #' @param expeditions list of expeditions to include in the query. The default is all expeditions
 #' @param names       list of column names to include in the data.frame results
-#' @param query       FIMS Query DSL (http://fims.readthedocs.io/en/latest/fims/query.html) query string.
+#' @param query       FIMS Query DSL \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
 #'                    Ex. '+locality:fuzzy +country:"exact phrase"'
 #' @examples
 #' \dontrun{
@@ -121,7 +121,7 @@ prepareQueryString <- function(expeditions, query) {
 #'
 #' @param marker      the marker to fetch
 #' @param expeditions list of expeditions to include in the query. The default is all expeditions
-#' @param query       FIMS Query DSL (http://fims.readthedocs.io/en/latest/fims/query.html) query string.
+#' @param query       FIMS Query DSL \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
 #'                    Ex. '+locality:fuzzy +country:"exact phrase"'
 #' @examples
 #' \dontrun{
