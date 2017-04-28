@@ -7,7 +7,8 @@ projectId <- 25
 
 fimsRestRoot <- "http://www.geome-db.org/rest"
 fimsProjectExpeditionsUrl <- paste(fimsRestRoot, "projects", projectId, "expeditions", sep="/")
-fimsQueryUrl <- paste(fimsRestRoot, "projects", "query", "csv", sep="/")
+#fimsQueryUrl <- paste(fimsRestRoot, "projects", "query", "csv", sep="/")
+fimsQueryUrl <- paste(fimsRestRoot, "projects", "query", "fastq", sep="/")
 fimsFastaQueryUrl <- paste(fimsRestRoot, "projects", "query", "fasta", sep="/")
 fimsFastaMarkersUrl <- paste(fimsRestRoot, "projects", projectId, "config", "lists", "markers", "fields", sep="/")
 
