@@ -1,10 +1,21 @@
 # geome-db
 A set of R scripts for accessing and working with geome-db FIMS data from R
 
-Installation of geome_db package from CRAN
+## Installation
+To get the current released version from [CRAN](https://CRAN.R-project.org/package=geomedb) :
 ```
 install.packages("geomedb")
 ```
+
+To get the current development version from github:
+```
+install.packages("devtools")
+library(devtools)
+install_github("dipnet/fimsR-access")
+library(geomedb)
+```
+
+## Examples
 
 The query function will execute a query against the fims database. The results are returned as a data.frame
 The most basic query will return all the samples in the database:
@@ -46,16 +57,3 @@ You can fetch a list of the current fasta marker types:
 ```
 markers <- listMarkers()
 ```
-
-### Development
-Installation of geome_db package from github
-```
-install.packages("devtools")
-library(devtools)
-install_github("dipnet/fimsR-access")
-library(geomedb)
-```
-
-
-
- 
