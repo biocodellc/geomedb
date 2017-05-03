@@ -47,7 +47,7 @@ You can fetch a list of the current fasta marker types:
 markers <- listMarkers()
 ```
 
-###
+### Development
 Installation of geome_db package from github
 ```
 install.packages("devtools")
