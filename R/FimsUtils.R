@@ -163,6 +163,7 @@ queryFasta <- function(marker, expeditions=list(), query="") {
             return()
         }
 
-        return(adegenet::fasta2DNAbin("geome-db-output.fasta"))
+	# returns output as a list
+        return(ape::read.FASTA("geome-db-output.fasta"))
     }
 }
