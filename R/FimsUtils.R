@@ -58,6 +58,7 @@ listMarkers <- function() {
 #' @param names       list of column names to include in the data.frame results
 #' @param query       FIMS Query DSL \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
 #'                    Ex. '+locality:fuzzy +country:"exact phrase"'
+#' return: a dataframe object
 #' @examples
 #' \dontrun{
 #' df <- queryMetadata(expeditions=list("TEST", "TEST2"))
@@ -124,6 +125,7 @@ prepareQueryString <- function(expeditions, query) {
 #' @param expeditions list of expeditions to include in the query. The default is all expeditions
 #' @param query       FIMS Query DSL \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
 #'                    Ex. '+locality:fuzzy +country:"exact phrase"'
+#' return: a DNAbin object, which is a fairly standard form for storing DNA data in binary format
 #' @examples
 #' \dontrun{
 #' fasta <- queryFasta("C01", expeditions=list("TEST"), query="+yearCollected:2008")
