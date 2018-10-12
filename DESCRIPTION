@@ -1,17 +1,19 @@
 Package: geomedb
 Type: Package
-Title: Functions for Fetching Geome-db FIMS Data
-Version: 0.1
-Date: 2017-04-22
-Author: RJ Ewing
-Maintainer: RJ Ewing<ewing.rj@gmail.com>
-Description: This package provides functions for fetching geome-db data for analysis in R.
+Title: Functions for fetching 'GeOMe-db' Data
+Version: 1.0
+Date: 2018-10-11
+Author: Biocodellc
+Maintainer: GeOMe<geome.help@gmail.com>
+Description: The Genomic Observatory Metadatabase (GeOMe Database) is an open access repository for
+    geographic and ecological metadata associated with sequenced samples. This package is used to retrieve
+    GeOMe data for analysis. See <http://www.geome-db.org> for more information regarding GeOMe.
 URL: http://www.geome-db.org, https://github.com/DIPnet/fimsR-access
 BugReports: https://github.com/DIPnet/fimsR-access/issues
 License: GPL-3
 LazyData: TRUE
 Imports:
-    adegenet,
+    ape,
     httr
 Depends:
     utils
