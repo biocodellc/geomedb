@@ -138,7 +138,7 @@ queryMetadata <- function(entity, projects=list(), expeditions=list(), select=li
 
         results <- httr::content(r)$content
 
-        if (length(results[entity]) == limit) {
+        if (length(results[[entity]]) == limit) {
             print("More results available. Run the query again, incrementing the page variable")
         }
 
@@ -228,6 +228,10 @@ prepareQueryString <- function(projects, expeditions, select, query) {
     if (length(select) > 0) {
         s <- paste0('_select_:[', paste(select, collaplse=','), ']')
         query <- paste0(s, " ", query)
+    }
+
+    if (trimws(query) == '') {
+        return("*")
     }
 
     return(query)
