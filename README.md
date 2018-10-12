@@ -17,40 +17,65 @@ library(geomedb)
 
 ## Examples
 
-The query function will execute a query against the fims database. The results are returned as a data.frame
+To get a list of projects in the database:
+```
+project <- listProjects()
+```
+
+To get a list of expeditions for a project:
+```
+expeditions <- listExpeditions(1)
+```
+
+To get a list of entities available to query in geome:
+```
+entities <- listEntities()
+```
+
+To get a list of entities available to query for a specific project:
+```
+entities <- listEntities(1)
+```
+
+The query function will execute a query against the [GeOMe](https://geome-db.org) database. The results are returned as a data.frame
 The most basic query will return all the samples in the database:
 ```
 df <- queryMetadata()
 ```
 
-The following query will return all samples for the expeditions "TEST" and "TEST2"
+The following query will return all samples for the expeditions "acaach_cyb_jd" and "acajap_cyb_jd"
 ```
-df <- queryMetadata(expeditions=list("TEST", "TEST2"))
+df <- queryMetadata('Sample', projects=list(1), expeditions=list("acaach_cyb_jd", "acajap_cyb_jd"))
 ```
 
 The following query will the return "materialSampleID" and "bcid" columns for all samples.
 ```
-df <- queryMetadata(names=list("materialSampleID", "bcid"))
+df <- queryMetadata('Sample', source=list("materialSampleID", "bcid"))
+```
+
+The following query will the return "materialSampleID", "bcid" and "eventID" columns for all samples and "eventID" and "locality" for all events related to the samples.
+```
+df <- queryMetadata('Sample', select=list("Event"), source=list("materialSampleID", "bcid", "eventID", "Event.eventID", "Event.locality"))
 ```
 
 The following query will the return "materialSampleID" and "bcid" columns for all samples where a full text search matches "Chordata"
 ```
-df <- queryMetadata(names=list("materialSampleID", "bcid"), query="Chordata")
+df <- queryMetadata('Sample', source=list("materialSampleID", "bcid"), query="Chordata")
 ```
 
-The following query will the return "materialSampleID" and "bcid" columns for the samples in "TEST" expeditions where "yearCollected" = 2008
+The following query will the return "materialSampleID" and "bcid" columns for the samples in "acaach_cyb_jd" expeditions wher "yearCollected" = 2008
 ```
-df <- queryMetadata(expeditions=list("TEST"), names=list("materialSampleID", "bcid"), query="+yearCollected:2008")
-```
-
-The following will fetch "CO1" fasta sequences and return a DNABin 
-```
-fasta <- queryFasta("C01", expeditions=list("TEST"), query="+yearCollected:2008")
+df <- queryMetadata('Sample', projects=list(1), expeditions=list("acaach_cyb_jd"), source=list("materialSampleID", "bcid"), query="yearCollected=2008")
 ```
 
-You can fetch a list of expeditionCodes that are available to query:
+The following will fetch "CYB" fasta sequences and return a DNABin 
 ```
-expeditionsList <- listExpeditions()
+fasta <- queryFasta('CYB')
+```
+
+The following will fetch "CYB" fasta sequences for the expeditions "acaach_cyb_jd" and "acajap_cyb_jd" collected after 2007 and return a DNABin 
+```
+fasta <- queryFasta('CYB', projects=list(1), expeditions=list("acaach_cyb_jd", "acajap_cyb_jd"), query="yearCollected >= 2008")
 ```
 
 You can fetch a list of the current fasta marker types:

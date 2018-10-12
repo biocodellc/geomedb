@@ -107,8 +107,8 @@ listMarkers <- function() {
 #' @param projects    list of projects to include in the query. The default is all projects
 #' @param expeditions Only applicable if projects are specified. list of expeditions to include in the query. The default is all expeditions
 #' @param select      list of entites to include in the response. The @param `entity` will always be included in the response.
-#' @param sources     list of column names to include in the data.frame results. 
-#'                    If there is no entity prefix, the column is assumed to belong to the @param `entity`.
+#' @param source      list of column names to include in the data.frame results. If there is no entity prefix, the column
+#'                    is assumed to belong to the @param `entity`.
 #'                    Ex. list('Event.eventID', 'Event.locality', 'materialSampleID', 'bcid', 'Event.bcid')
 #'                          'materialSampleID' and 'bcid' in the above list are assumed to belong to the @param `entity`
 #' @param query       FIMS Query DSL \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
@@ -124,13 +124,13 @@ listMarkers <- function() {
 #' df <- queryMetadata('Sample', select=list('Event', 'Tissue'), names=list("bcid"), query="yearCollected=2008")
 #' }
 #' @export
-queryMetadata <- function(entity, projects=list(), expeditions=list(), select=list(), query="", sources=NULL, page=0, limit="10000") {
+queryMetadata <- function(entity, projects=list(), expeditions=list(), select=list(), query="", source=NULL, page=0, limit="10000") {
     query.string <- prepareQueryString(projects, expeditions, select, query)
 
-    if (!is.null(sources)) {
-        sources = paste(sources, collapse=",")
+    if (!is.null(source)) {
+        sources = paste(source, collapse=",")
     }
-    r <- httr::GET(gsub("_entity_", entity, fimsQueryUrl), query=list(q = query.string, limit=format(limit, scientific = FALSE), page=format(page, scientific = FALSE), source=sources))
+    r <- httr::GET(gsub("_entity_", entity, fimsQueryUrl), query=list(q = query.string, limit=format(limit, scientific = FALSE), page=format(page, scientific = FALSE), source=source))
 
     stop_for_status(r)
     if (httr::status_code(r) == 204) {
@@ -145,8 +145,6 @@ queryMetadata <- function(entity, projects=list(), expeditions=list(), select=li
 
         # transform each entity results to a dataframe
         return(lapply(results, function(x) do.call("rbind", x)))
-        # TODO provide method that will join results
-        # TODO fix fasta query function
     }
 }
 
@@ -160,7 +158,7 @@ queryMetadata <- function(entity, projects=list(), expeditions=list(), select=li
 #' return: a DNAbin object, which is a fairly standard form for storing DNA data in binary format
 #' @examples
 #' \dontrun{
-#' fasta <- queryFasta('CyB', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"), query="yearCollected >= 2008")
+#' fasta <- queryFasta('CYB', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"), query="yearCollected >= 2008")
 #' }
 #' @export
 queryFasta <- function(marker, projects=list(), expeditions=list(), query="") {
