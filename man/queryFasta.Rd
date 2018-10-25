@@ -4,22 +4,25 @@
 \alias{queryFasta}
 \title{fetch Fasta sequences from the geome-db database}
 \usage{
-queryFasta(marker, expeditions = list(), query = "")
+queryFasta(marker, projects = list(), expeditions = list(),
+  query = "")
 }
 \arguments{
-\item{marker}{the marker to fetch}
+\item{marker}{the marker to fetch. list of markers can be found by calling `listMarkers()`}
 
-\item{expeditions}{list of expeditions to include in the query. The default is all expeditions}
+\item{projects}{list of projects to include in the query. The default is all projects}
+
+\item{expeditions}{Only applicable if projects are specified. list of expeditions to include in the query. The default is all expeditions}
 
 \item{query}{FIMS Query DSL \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
-Ex. '+locality:fuzzy +country:"exact phrase"'}
+                   Ex. 'yearCollected >= 2017 and country = "Indonesia"'
+return: a DNAbin object, which is a fairly standard form for storing DNA data in binary format}
 }
 \description{
 fetch Fasta sequences from the geome-db database
 }
 \examples{
 \dontrun{
-fasta <- queryFasta("C01", expeditions=list("TEST"), query="+yearCollected:2008")
+fasta <- queryFasta('CYB', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"), query="yearCollected >= 2008")
 }
 }
-

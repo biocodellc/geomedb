@@ -4,24 +4,40 @@
 \alias{queryMetadata}
 \title{fetch the FimsMetadata from the geome-db database}
 \usage{
-queryMetadata(expeditions = list(), query = "", names = NULL)
+queryMetadata(entity, projects = list(), expeditions = list(),
+  select = list(), query = "", source = NULL, page = 0,
+  limit = "10000")
 }
 \arguments{
-\item{expeditions}{list of expeditions to include in the query. The default is all expeditions}
+\item{entity}{The entity to query. One of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo')}
+
+\item{projects}{list of projects to include in the query. The default is all projects}
+
+\item{expeditions}{Only applicable if projects are specified. list of expeditions to include in the query. The default is all expeditions}
+
+\item{select}{list of entites to include in the response. The @param `entity` will always be included in the response.}
 
 \item{query}{FIMS Query DSL \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
-Ex. '+locality:fuzzy +country:"exact phrase"'}
+Ex. 'yearCollected >= 2017 and country = "Indonesia"'}
 
-\item{names}{list of column names to include in the data.frame results}
+\item{source}{list of column names to include in the data.frame results. If there is no entity prefix, the column
+is assumed to belong to the @param `entity`.
+Ex. list('Event.eventID', 'Event.locality', 'materialSampleID', 'bcid', 'Event.bcid')
+      'materialSampleID' and 'bcid' in the above list are assumed to belong to the @param `entity`}
+
+\item{page}{The results page to return. Used to offset the page for large result sets. Defaults to 0.}
+
+\item{limit}{The number of results to include in the response. Defaults to 10000
+return: a dataframe object}
 }
 \description{
 fetch the FimsMetadata from the geome-db database
 }
 \examples{
 \dontrun{
-df <- queryMetadata(expeditions=list("TEST", "TEST2"))
-df <- queryMetadata(names=list("materialSampleID", "bcid"), query="Chordata")
-df <- queryMetadata(expeditions=list("TEST"), names=list("bcid"), query="+yearCollected:2008")
+df <- queryMetadata('Sample', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"))
+df <- queryMetadata('Sample', names=list("materialSampleID", "bcid"), query="Chordata")
+df <- queryMetadata('Sample', projects=list(1), expeditions=list("acajap_CyB_JD"), names=list("bcid"), query="yearCollected=2008")
+df <- queryMetadata('Sample', select=list('Event', 'Tissue'), names=list("bcid"), query="yearCollected=2008")
 }
 }
-

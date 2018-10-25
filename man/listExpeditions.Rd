@@ -2,16 +2,15 @@
 % Please edit documentation in R/FimsUtils.R
 \name{listExpeditions}
 \alias{listExpeditions}
-\title{get a list of expeditions to query against}
+\title{get a list of expeditions for a project}
 \usage{
-listExpeditions()
+listExpeditions(projectId)
 }
 \description{
-get a list of expeditions to query against
+get a list of expeditions for a project
 }
 \examples{
 \dontrun{
-expeditions <- listExpeditions()
+expeditions <- listExpeditions(projectId)
 }
 }
-

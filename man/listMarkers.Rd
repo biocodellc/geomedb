@@ -2,16 +2,15 @@
 % Please edit documentation in R/FimsUtils.R
 \name{listMarkers}
 \alias{listMarkers}
-\title{get a list of markers to query against}
+\title{get a list of fasta markers}
 \usage{
 listMarkers()
 }
 \description{
-get a list of markers to query against
+get a list of fasta markers
 }
 \examples{
 \dontrun{
 markers <- listMarkers()
 }
 }
-
