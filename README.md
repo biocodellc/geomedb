@@ -11,7 +11,7 @@ To get the current development version from github:
 ```
 install.packages("devtools")
 library(devtools)
-install_github("dipnet/fimsR-access")
+install_github("biocodellc/fimsR-access")
 library(geomedb)
 ```
 
