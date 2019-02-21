@@ -2,7 +2,8 @@
 
 # This is a utility script to query the GeOMe-db database for analysis in R
 
-fimsRestRoot <- "https://api.geome-db.org"
+fimsRestRoot <- "https://api.develop.geome-db.org"
+#fimsRestRoot <- "http://localhost:8080"
 fimsProjectsUrl <- paste(fimsRestRoot, "projects", sep="/")
 fimsExpeditionsUrl <- paste(fimsRestRoot, "projects", "_projectId_", "expeditions", sep="/")
 fimsNetworkConfigUrl <- paste(fimsRestRoot, "network", "config", sep="/")
@@ -59,7 +60,6 @@ listExpeditions <- function(projectId) {
 #' }
 #' @export
 listEntities <- function(projectId=NA) {
-    print(projectId)
     if (is.na(projectId)) {
         r <- httr::GET(fimsNetworkConfigUrl)
     } else {
@@ -163,7 +163,6 @@ queryMetadata <- function(entity, projects=list(), expeditions=list(), select=li
 queryFasta <- function(marker, projects=list(), expeditions=list(), query="") {
     query.string <- prepareQueryString(projects, expeditions, list(), query)
 
-    print(query.string)
     if (nchar(query.string) > 0) {
         query.string <- paste0("(", query.string, ") AND ", 'fastaSequence.marker = ', marker)
     } else {
@@ -178,7 +177,6 @@ queryFasta <- function(marker, projects=list(), expeditions=list(), query="") {
         print("No Samples Found")
     } else {
 
-        print(httr::content(r))
         fileResponse <- httr::GET(httr::content(r)$url)
 
         stop_for_status(fileResponse)

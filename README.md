@@ -63,9 +63,9 @@ The following query will the return "materialSampleID" and "bcid" columns for al
 df <- queryMetadata('Sample', source=list("materialSampleID", "bcid"), query="Chordata")
 ```
 
-The following query will the return "materialSampleID" and "bcid" columns for the samples in "acaach_cyb_jd" expeditions wher "yearCollected" = 2008
+The following query will the return "materialSampleID" and "bcid" columns for the samples in "acaach_CyB_JD" expeditions wher "yearCollected" = 2008
 ```
-df <- queryMetadata('Sample', projects=list(1), expeditions=list("acaach_cyb_jd"), source=list("materialSampleID", "bcid"), query="yearCollected=2008")
+df <- queryMetadata('Sample', projects=list(1), expeditions=list("acaach_CyB_JD"), source=list("materialSampleID", "bcid"), query="yearCollected=2008")
 ```
 
 The following will fetch "CYB" fasta sequences and return a DNABin 
@@ -73,9 +73,9 @@ The following will fetch "CYB" fasta sequences and return a DNABin
 fasta <- queryFasta('CYB')
 ```
 
-The following will fetch "CYB" fasta sequences for the expeditions "acaach_cyb_jd" and "acajap_cyb_jd" collected after 2007 and return a DNABin 
+The following will fetch "CYB" fasta sequences for the expeditions "acaach_CyB_JD" and "acajap_CyB_JD" collected after 2007 and return a DNABin 
 ```
-fasta <- queryFasta('CYB', projects=list(1), expeditions=list("acaach_cyb_jd", "acajap_cyb_jd"), query="yearCollected >= 2008")
+fasta <- queryFasta('CYB', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"), query="yearCollected >= 2008")
 ```
 
 You can fetch a list of the current fasta marker types:
