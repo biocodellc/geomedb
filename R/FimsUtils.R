@@ -2,7 +2,7 @@
 
 # This is a utility script to query the GeOMe-db database for analysis in R
 
-fimsRestRoot <- "https://api.develop.geome-db.org"
+fimsRestRoot <- "https://api.geome-db.org"
 #fimsRestRoot <- "http://localhost:8080"
 fimsProjectsUrl <- paste(fimsRestRoot, "projects", sep="/")
 fimsExpeditionsUrl <- paste(fimsRestRoot, "projects", "_projectId_", "expeditions", sep="/")
