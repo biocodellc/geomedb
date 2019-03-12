@@ -127,7 +127,7 @@ queryMetadata <- function(entity, projects=list(), expeditions=list(), select=li
     query.string <- prepareQueryString(projects, expeditions, select, query)
 
     if (!is.null(source)) {
-        sources = paste(source, collapse=",")
+        source = paste(source, collapse=",")
     }
     r <- httr::GET(gsub("_entity_", entity, fimsQueryUrl), query=list(q = query.string, limit=format(limit, scientific = FALSE), page=format(page, scientific = FALSE), source=source))
 
@@ -143,7 +143,7 @@ queryMetadata <- function(entity, projects=list(), expeditions=list(), select=li
         }
 
         # transform each entity results to a dataframe
-        return(lapply(results, function(x) do.call("rbind", x)))
+        return(lapply(results, function(x) data.table::rbindlist(x, fill=TRUE)))
     }
 }
 
@@ -224,10 +224,9 @@ prepareQueryString <- function(projects, expeditions, select, query) {
     }
 
     if (length(select) > 0) {
-        s <- paste0('_select_:[', paste(select, collaplse=','), ']')
+        s <- paste0('_select_:[', paste(select, collapse=','), ']')
         query <- paste0(s, " ", query)
     }
-
     if (trimws(query) == '') {
         return("*")
     }

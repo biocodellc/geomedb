@@ -15,6 +15,7 @@ LazyData: TRUE
 Imports:
     ape,
     httr
+    data.table
 Depends:
     utils
 RoxygenNote: 6.1.0

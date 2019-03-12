@@ -40,12 +40,12 @@ entities <- listEntities(1)
 The query function will execute a query against the [GeOMe](https://geome-db.org) database. The results are returned as a data.frame
 The most basic query will return all the samples in the database:
 ```
-df <- queryMetadata()
+df <- queryMetadata('Sample')
 ```
 
-The following query will return all samples for the expeditions "acaach_cyb_jd" and "acajap_cyb_jd"
+The following query will return all samples for the expeditions "acaach_CyB_JD" and "acajap_CyB_JD"
 ```
-df <- queryMetadata('Sample', projects=list(1), expeditions=list("acaach_cyb_jd", "acajap_cyb_jd"))
+df <- queryMetadata('Sample', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"))
 ```
 
 The following query will the return "materialSampleID" and "bcid" columns for all samples.
