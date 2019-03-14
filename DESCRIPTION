@@ -2,7 +2,7 @@ Package: geomedb
 Type: Package
 Title: Functions for fetching 'GeOMe-db' Data
 Version: 1.0
-Date: 2018-10-11
+Date: 2019-03-14
 Author: Biocodellc
 Maintainer: GeOMe<geome.help@gmail.com>
 Description: The Genomic Observatory Metadatabase (GeOMe Database) is an open access repository for
@@ -14,7 +14,7 @@ License: GPL-3
 LazyData: TRUE
 Imports:
     ape,
-    httr
+    httr,
     data.table
 Depends:
     utils
