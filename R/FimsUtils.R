@@ -163,12 +163,12 @@ queryMetadata <- function(entity, projects=list(), expeditions=list(), select=li
 queryFasta <- function(marker, projects=list(), expeditions=list(), query="") {
     query.string <- prepareQueryString(projects, expeditions, list(), query)
 
-    if (nchar(query.string) > 0) {
+    if (nchar(query.string) > 0 && query.string != '*') {
         query.string <- paste0("(", query.string, ") AND ", 'fastaSequence.marker = ', marker)
     } else {
-        query.string <- paste0(query.string, 'fastaSequence.marker = ', marker)
+        query.string <- paste0('fastaSequence.marker = ', marker)
     }
-
+    
     r <- httr::GET(fimsFastaQueryUrl, query=list(q = query.string))
 
     stop_for_status(r)
