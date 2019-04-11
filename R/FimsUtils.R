@@ -129,6 +129,7 @@ queryMetadata <- function(entity, projects=list(), expeditions=list(), select=li
     if (!is.null(source)) {
         source = paste(source, collapse=",")
     }
+   
     r <- httr::GET(gsub("_entity_", entity, fimsQueryUrl), query=list(q = query.string, limit=format(limit, scientific = FALSE), page=format(page, scientific = FALSE), source=source))
 
     stop_for_status(r)
@@ -136,14 +137,14 @@ queryMetadata <- function(entity, projects=list(), expeditions=list(), select=li
         print("No Records Found")
     } else {
 
-        results <- httr::content(r)$content
+        resp <- httr::content(r, as='text')
+        results <- jsonlite::fromJSON(resp)$content
 
         if (length(results[[entity]]) == limit) {
             print("More results available. Run the query again, incrementing the page variable")
         }
 
-        # transform each entity results to a dataframe
-        return(lapply(results, function(x) data.table::rbindlist(x, fill=TRUE)))
+        return(results)
     }
 }
 

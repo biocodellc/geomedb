@@ -15,6 +15,7 @@ LazyData: TRUE
 Imports:
     ape,
     httr,
+    jsonlite,
     data.table
 Depends:
     utils
