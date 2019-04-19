@@ -121,6 +121,7 @@ listMarkers <- function() {
 #' df <- queryMetadata('Sample', names=list("materialSampleID", "bcid"), query="Chordata")
 #' df <- queryMetadata('Sample', projects=list(1), expeditions=list("acajap_CyB_JD"), names=list("bcid"), query="yearCollected=2008")
 #' df <- queryMetadata('Sample', select=list('Event', 'Tissue'), names=list("bcid"), query="yearCollected=2008")
+#' df <- queryMetadata('fastqMetadata', select=list('Event', 'Sample', 'Tissue'), query="_exists_:bioSample")
 #' }
 #' @export
 queryMetadata <- function(entity, projects=list(), expeditions=list(), select=list(), query="", source=NULL, page=0, limit="10000") {

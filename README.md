@@ -63,9 +63,14 @@ The following query will the return "materialSampleID" and "bcid" columns for al
 df <- queryMetadata('Sample', source=list("materialSampleID", "bcid"), query="Chordata")
 ```
 
-The following query will the return "materialSampleID" and "bcid" columns for the samples in "acaach_CyB_JD" expeditions wher "yearCollected" = 2008
+The following query will the return "materialSampleID" and "bcid" columns for the samples in "acaach_CyB_JD" expeditions where "yearCollected" = 2008
 ```
 df <- queryMetadata('Sample', projects=list(1), expeditions=list("acaach_CyB_JD"), source=list("materialSampleID", "bcid"), query="yearCollected=2008")
+```
+
+The following query will the return all fastqMetadata and related tissues, samples, and events which have an SRA (bioSample) accession number attached.
+```
+df <- queryMetadata("fastqMetadata", select=list("Event", "Sample", "Tissue"), query="_exists_:bioSample")
 ```
 
 The following will fetch "CYB" fasta sequences and return a DNABin 
