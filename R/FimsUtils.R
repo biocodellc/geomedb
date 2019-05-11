@@ -32,6 +32,7 @@ listProjects <- function() {
 }
 
 #' get a list of expeditions for a project
+#' @param projectId The project to list expeditions for.
 #' @examples
 #' \dontrun{
 #' expeditions <- listExpeditions(projectId)
@@ -119,9 +120,12 @@ listMarkers <- function() {
 #' \dontrun{
 #' df <- queryMetadata('Sample', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"))
 #' df <- queryMetadata('Sample', names=list("materialSampleID", "bcid"), query="Chordata")
-#' df <- queryMetadata('Sample', projects=list(1), expeditions=list("acajap_CyB_JD"), names=list("bcid"), query="yearCollected=2008")
-#' df <- queryMetadata('Sample', select=list('Event', 'Tissue'), names=list("bcid"), query="yearCollected=2008")
-#' df <- queryMetadata('fastqMetadata', select=list('Event', 'Sample', 'Tissue'), query="_exists_:bioSample")
+#' df <- queryMetadata('Sample', projects=list(1), expeditions=list("acajap_CyB_JD"),
+#'                     names=list("bcid"), query="yearCollected=2008")
+#' df <- queryMetadata('Sample', select=list('Event', 'Tissue'), names=list("bcid"),
+#'                     query="yearCollected=2008")
+#' df <- queryMetadata('fastqMetadata', select=list('Event', 'Sample', 'Tissue'),
+#'                     query="_exists_:bioSample")
 #' }
 #' @export
 queryMetadata <- function(entity, projects=list(), expeditions=list(), select=list(), query="", source=NULL, page=0, limit="10000") {
@@ -159,7 +163,8 @@ queryMetadata <- function(entity, projects=list(), expeditions=list(), select=li
 #' return: a DNAbin object, which is a fairly standard form for storing DNA data in binary format
 #' @examples
 #' \dontrun{
-#' fasta <- queryFasta('CYB', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"), query="yearCollected >= 2008")
+#' fasta <- queryFasta('CYB', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"),
+#'                      query="yearCollected >= 2008")
 #' }
 #' @export
 queryFasta <- function(marker, projects=list(), expeditions=list(), query="") {

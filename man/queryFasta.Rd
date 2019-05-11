@@ -23,6 +23,7 @@ fetch Fasta sequences from the geome-db database
 }
 \examples{
 \dontrun{
-fasta <- queryFasta('CYB', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"), query="yearCollected >= 2008")
+fasta <- queryFasta('CYB', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"),
+                     query="yearCollected >= 2008")
 }
 }

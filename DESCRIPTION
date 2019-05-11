@@ -1,17 +1,18 @@
 Package: geomedb
 Type: Package
-Title: Functions for fetching 'GeOMe-db' Data
-Version: 1.0
-Date: 2019-03-14
+Title: Functions for Fetching 'GeOMe-db' Data
+Version: 1.0.0
+Date: 2019-05-11
 Author: Biocodellc
 Maintainer: GeOMe<geome.help@gmail.com>
 Description: The Genomic Observatory Metadatabase (GeOMe Database) is an open access repository for
     geographic and ecological metadata associated with sequenced samples. This package is used to retrieve
     GeOMe data for analysis. See <http://www.geome-db.org> for more information regarding GeOMe.
-URL: http://www.geome-db.org, https://github.com/DIPnet/fimsR-access
-BugReports: https://github.com/DIPnet/fimsR-access/issues
+URL: http://www.geome-db.org, https://github.com/biocodellc/fimsR-access
+BugReports: https://github.com/biocodellc/fimsR-access/issues
 License: GPL-3
 LazyData: TRUE
+Encoding: UTF-8
 Imports:
     ape,
     httr,
@@ -19,4 +20,4 @@ Imports:
     data.table
 Depends:
     utils
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

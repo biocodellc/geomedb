@@ -37,7 +37,11 @@ fetch the FimsMetadata from the geome-db database
 \dontrun{
 df <- queryMetadata('Sample', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"))
 df <- queryMetadata('Sample', names=list("materialSampleID", "bcid"), query="Chordata")
-df <- queryMetadata('Sample', projects=list(1), expeditions=list("acajap_CyB_JD"), names=list("bcid"), query="yearCollected=2008")
-df <- queryMetadata('Sample', select=list('Event', 'Tissue'), names=list("bcid"), query="yearCollected=2008")
+df <- queryMetadata('Sample', projects=list(1), expeditions=list("acajap_CyB_JD"),
+                    names=list("bcid"), query="yearCollected=2008")
+df <- queryMetadata('Sample', select=list('Event', 'Tissue'), names=list("bcid"),
+                    query="yearCollected=2008")
+df <- queryMetadata('fastqMetadata', select=list('Event', 'Sample', 'Tissue'),
+                    query="_exists_:bioSample")
 }
 }

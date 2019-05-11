@@ -6,6 +6,9 @@
 \usage{
 listExpeditions(projectId)
 }
+\arguments{
+\item{projectId}{The project to list expeditions for.}
+}
 \description{
 get a list of expeditions for a project
 }
