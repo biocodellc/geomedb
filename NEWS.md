@@ -1,6 +1,6 @@
 # geomedb 1.0
 
-This is a major release, which updates the package to work with the latest [GeOMe](https://geomedb.org) changes.
+This is a major release, which updates the package to work with the latest [GeOMe](https://geome-db.org) changes.
 
 * queryMetadata: 
 	* query across multiple project & all data in GeOMe
