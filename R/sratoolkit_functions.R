@@ -5,7 +5,7 @@
 # to have been downloaded. The user can either add them to the $PATH or supply a path
 # to the functions.
 
-
+#' 
 fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory = "./", outputDirectory = "./", arguments = "-p", filenames = "accessions", source = "sra",cleanup = FALSE, fasterqDumpHelp = FALSE) {
   
   if(fasterqDumpHelp == TRUE){
@@ -230,84 +230,3 @@ prefetch <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory 
 
 
 
-
-
-#Write paired end data into separate files, and unpaired data into a 3rd file
-# by adding -3 to the list of arguments only if requested by user AND the library layout is "paired"
-if(splitPairs == TRUE) {
-  if(queryMetadata_object$fastqMetadata$libraryLayout[which(queryMetadata_object$fastqMetadata$bioSample$experiment$runAccession == accession_number)]=="paired"){
-    split <- "-3"
-  }}
-
-split <- NULL
-
-# Benchmarking
-On late 2015 iMac with 3.1 GHz Intel Core i5, 16 GB memory, 4 cores
-Downloading paired-end file with 7,992,378 reads per direction. 2.26 GB.
-
-# Just fasterq-dump
-
-m53e-303-26932:public cran5048$ time fasterq-dump SRR6473174 -p -o test
-join   :|-------------------------------------------------- 100.00%
-concat :|-------------------------------------------------- 100.00%
-spots read      : 7,992,378
-reads read      : 15,984,756
-reads written   : 15,984,756
-
-
-real	12m21.844s
-user	2m48.474s
-sys	0m13.722s
-
-# prefetch without aspera connect followed by fasterq-dump
-m53e-303-26932:public cran5048$ time prefetch SRR6473174
-
-2019-07-12T21:00:21 prefetch.2.9.3: 1) Downloading 'SRR6473174'...
-2019-07-12T21:00:21 prefetch.2.9.3:  Downloading via https...
-2019-07-12T21:01:11 prefetch.2.9.3: 1) 'SRR6473174' was downloaded successfully
-2019-07-12T21:01:11 prefetch.2.9.3: 'SRR6473174' has 0 unresolved dependencies
-
-real	0m50.095s
-user	0m3.971s
-sys	0m2.429s
-
-
-  m53e-303-26932:public cran5048$ time fasterq-dump SRR6473174 -p
-join   :|-------------------------------------------------- 100.00%
-concat :|-------------------------------------------------- 100.00%
-spots read      : 7,992,378
-reads read      : 15,984,756
-reads written   : 15,984,756
-
-real	4m59.680s
-user	2m36.175s
-sys	0m8.626s
-
-So about 6 minutes total
-
-# Using Aspera Connect
-
-m53e-303-26932:public cran5048$ time prefetch SRR6473174 -p 1
-
-2019-07-12T21:31:18 prefetch.2.9.3: 1) Downloading 'SRR6473174'...
-2019-07-12T21:31:18 prefetch.2.9.3:  Downloading via fasp...
-2019-07-12T21:31:44 prefetch.2.9.3:  fasp download succeed
-2019-07-12T21:31:44 prefetch.2.9.3: 1) 'SRR6473174' was downloaded successfully
-2019-07-12T21:31:44 prefetch.2.9.3: 'SRR6473174' has 0 unresolved dependencies
-
-real	0m27.567s
-user	0m0.901s
-sys	0m1.598s
-
-m53e-303-26932:public cran5048$ time fasterq-dump SRR6473174 -p
-join   :|-------------------------------------------------- 100.00%
-concat :|-------------------------------------------------- 100.00%
-spots read      : 7,992,378
-reads read      : 15,984,756
-reads written   : 15,984,756
-
-real	4m15.514s
-user	2m24.998s
-sys	0m8.254s
-
-Conversion even went faster... not sure why...
