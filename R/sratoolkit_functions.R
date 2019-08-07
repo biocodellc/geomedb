@@ -5,8 +5,39 @@
 # to have been downloaded. The user can either add them to the $PATH or supply a path
 # to the functions.
 
+#' Download fastq data from NCBI Sequence Read Archive
 #' 
-fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory = "./", outputDirectory = "./", arguments = "-p", filenames = "accessions", source = "sra",cleanup = FALSE, fasterqDumpHelp = FALSE) {
+#' `fasterqDump` uses the SRAtoolkit command-line function `fasterq-dump` to download fastq
+#' files from all samples returned by a `queryMetadata` query of GEOME, when one of the
+#' entities queried was `fastqMetadata`
+#' 
+#' @param queryMetadata_object A list object returned from `queryMetadata` where one of the 
+#'  entities queried was `fastqMetadata`.
+#' @param sratoolkitPath String. A path to a local copy of sratoolkit. Only necessary if sratoolkit
+#'  is not on your $PATH. Assumes executables are inside `bin`.
+#' @param outputDirectory String. A path to the directory where you would like the files to be stored.
+#' @param arguments A string variable of arguments to be passed directly to `fasterq-dump`.
+#' Defaults to "-p" to show progress. Use fasterqDumpHelp = FALSE to see a list of arguments.
+#' @param filenames String. How would you like the downloaded fastq files to be named?  
+#' "accessions" names files with SRA accession numbers
+#' "IDs" names files with their materialSampleID
+#' "locality_IDs" names files with their locality and materialSampleID.
+#' @param source String. `fasterq-dump` can retrieve files directly from SRA, or it can convert .sra files
+#'  previously downloaded with `prefetch` that are in the current working directory. 
+#'  "sra" downloads from SRA
+#'  "local" converts .sra files in the current working directory.
+#' @param cleanup Logical. cleanup = T will delete any intermediate .sra files.
+#' @param fasterqDumpHelp Logical. fasterqDumpHelp = T will show the help page for `fasterq-dump` and then quit.
+#' 
+#' @return This function will not return anything within r. It simply downloads fastq files.
+#' @seealso <https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/> to download pre-compiled executables for sratoolkit or
+#' <https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source> to install from source
+#' 
+#' This function works best with sratoolkit functions of version 2.9.6 or greater. It will not work on Windows systems
+#' because fasterq-dump is not currently available for Windows. See `fastqDump` if you use Windows. 
+#' It downloads files to the current working directory. unless a different one is assigned through outputDirectory.
+#' 
+fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory = "./", arguments = "-p", filenames = "accessions", source = "sra",cleanup = FALSE, fasterqDumpHelp = FALSE) {
   
   if(fasterqDumpHelp == TRUE){
     if(sratoolkitPath != ""){
@@ -22,8 +53,6 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", workingDirecto
   if(is.null(queryMetadata_object$fastqMetadata)){
     stop(paste(queryMetadata_object,"does not have any fastq metadata. Retry your query with select = c('fastqMetadata')"))
   }
-  
-  setwd(workingDirectory)
   
   runAccessions <- queryMetadata_object$fastqMetadata$bioSample$experiment$runAccessions
   
