@@ -37,6 +37,24 @@
 #' because fasterq-dump is not currently available for Windows. See `fastqDump` if you use Windows. 
 #' It downloads files to the current working directory. unless a different one is assigned through outputDirectory.
 #' 
+#' @examples
+#' \donttest{
+#' # Run a query of GEOME first
+#' acaoli <- queryMetadata(entity = "fastqMetadata", 
+#' query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event"))
+#' 
+#' #trim to 3 entries for expediency
+#' acaoli$fastqMetadata<-acaoli$fastqMetadata[1:3,]
+#' acaoli$Event<-acaoli$Event[1:3,]
+#' 
+#' # Download straight from SRA, naming files with their locality and materialSampleID
+#' fasterqDump(queryMetadata_object = acaoli, filenames = "locality_IDs", source = "sra")
+#' 
+#' # A generally faster option is to run prefetch first, followed by fasterqDump, with cleanup = T to remove the 
+#' # prefetched .sra files.
+#' prefetch(queryMetadata_object = acaoli)
+#' fasterqDump(queryMetadata_object = acaoli, filenames = "locality_IDs", source = "local", cleanup = T)
+#' }
 fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory = "./", arguments = "-p", filenames = "accessions", source = "sra",cleanup = FALSE, fasterqDumpHelp = FALSE) {
   
   if(fasterqDumpHelp == TRUE){
@@ -48,6 +66,10 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
     }
     stop("Showing fasterq-dump help and quitting")
   }
+  
+  # get a start time
+  start<-Sys.time()
+  print(paste("Start:", start))
   
   #check if fastqMetadata table is present
   if(is.null(queryMetadata_object$fastqMetadata)){
@@ -73,10 +95,10 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
     for(accession_number in runAccessions){
       print(accession_number)
       if(sratoolkitPath != ""){
-        system(command = paste(file.path(sratoolkitPath,"bin","fastq-dump"),paste(accession_number,".sra",sep=""),"-O",outputDirectory, arguments))
+        system(command = paste(file.path(sratoolkitPath,"bin","fasterq-dump"),paste(accession_number,".sra",sep=""),"-O",outputDirectory, arguments))
       }
       else{
-        system(command = paste("fastq-dump",paste(accession_number,".sra",sep=""),"-O",outputDirectory, arguments))
+        system(command = paste("fasterq-dump",paste(accession_number,".sra",sep=""),"-O",outputDirectory, arguments))
       }
       
     } 
@@ -87,7 +109,8 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
       #if the accession number part of the filename is NOT in the queryMetadata_object, skip it
       if(!(strsplit(file,".",fixed=T)[[1]][1] %in% runAccessions)){next}
       ID <- queryMetadata_object$fastqMetadata$identifier[which(runAccessions == strsplit(file,".", fixed=T)[[1]][1])]
-      filename<-sub(pattern = "[A-Z]+[0-9]+\\.*s*r*a*",replacement = ID, file, perl=T)
+      filename<-sub(pattern = ".sra", replacement = "", x = file, fixed=T)
+      filename<-sub(pattern = "[A-Z]{3}[0-9]+([12_]*\\.[a-z]+)",replacement = paste0(ID,"\\1"), filename, perl=T)
       print(paste("Renaming",file,"to",filename))
       file.rename(from = file.path(outputDirectory,file), to = file.path(outputDirectory,filename))
     }
@@ -103,7 +126,8 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
       #if the accession number part of the filename is NOT in the queryMetadata_object, skip it
       if(!(strsplit(file,".",fixed=T)[[1]][1] %in% runAccessions)){next}
       locality_ID <- paste(queryMetadata_object$Event$locality[which(runAccessions == strsplit(file,".", fixed=T)[[1]][1])], queryMetadata_object$fastqMetadata$identifier[which(runAccessions == strsplit(file,".", fixed=T)[[1]][1])], sep = "_")
-      filename<-sub(pattern = "[A-Z]+[0-9]+\\.*s*r*a*",replacement = locality_ID, file, perl=T)
+      filename<-sub(pattern = ".sra", replacement = "", x = file, fixed=T)
+      filename<-sub(pattern = "[A-Z]{3}[0-9]+([12_]*\\.[a-z]+)",replacement = paste0(locality_ID,"\\1"), filename, perl=T)
       print(paste("Renaming",file,"to",filename))
       file.rename(from = file.path(outputDirectory,file), to = file.path(outputDirectory,filename))
     }
@@ -114,7 +138,8 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
     for(file in list.files(path=outputDirectory, pattern=".fastq")){  
       #if the accession number part of the filename is NOT in the queryMetadata_object, skip it
       if(!(strsplit(file,".",fixed=T)[[1]][1] %in% runAccessions)){next}
-      filename<-sub(pattern = "([A-Z]+[0-9]+)\\.*s*r*a*",replacement = "\\1", file, perl=T)
+      filename<-sub(pattern = ".sra", replacement = "", x = file, fixed=T)
+      filename<-sub(pattern = "([A-Z]{3}[0-9]+[12_]*)\\.[a-z]+",replacement = paste0("\\1",".fastq"), filename, perl=T)
       print(paste("Renaming",file,"to",filename))
       file.rename(from = file.path(outputDirectory,file), to = file.path(outputDirectory,filename))
     }
@@ -127,9 +152,14 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
     }
   }
   
+  #get an end time and measure the length of the run
+  end <- Sys.time()
+  print(paste("Finish:", end))
+  print(end - start)
+  
   }
 
-fastqDump <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory = ".", outputDirectory = ".", arguments = "-v --split-3", filenames = "accessions", source = "sra", cleanup = FALSE, fastqdumpHelp = FALSE) {
+fastqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory = ".", arguments = "-v --split-3", filenames = "accessions", source = "sra", cleanup = FALSE, fastqdumpHelp = FALSE) {
 
     if(fastqdumpHelp == TRUE){
       if(sratoolkitPath != ""){
@@ -145,8 +175,10 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory
     if(is.null(queryMetadata_object$fastqMetadata)){
       stop(paste(queryMetadata_object,"does not have any fastq metadata. Retry your query with select = c('fastqMetadata')"))
     }
-    
-    setwd(workingDirectory)
+  
+    # get a start time
+    start<-Sys.time()
+    print(paste("Start:", start))
 
     runAccessions <- queryMetadata_object$fastqMetadata$bioSample$experiment$runAccessions
     
@@ -182,7 +214,8 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory
         #if the accession number part of the filename is NOT in the queryMetadata_object, skip it
         if(!(strsplit(file,".",fixed=T)[[1]][1] %in% runAccessions)){next}
         ID <- queryMetadata_object$fastqMetadata$identifier[which(runAccessions == strsplit(file,".", fixed=T)[[1]][1])]
-        filename<-sub(pattern = "[A-Z]+[0-9]+\\.*s*r*a*",replacement = ID, file, perl=T)
+        filename<-sub(pattern = ".sra", replacement = "", x = file, fixed=T)
+        filename<-sub(pattern = "[A-Z]{3}[0-9]+([12_]*\\.[a-z]+)",replacement = paste0(ID,"\\1"), filename, perl=T)
         print(paste("Renaming",file,"to",filename))
         file.rename(from = file.path(outputDirectory,file), to = file.path(outputDirectory,filename))
       }
@@ -198,7 +231,8 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory
         #if the accession number part of the filename is NOT in the queryMetadata_object, skip it
         if(!(strsplit(file,".",fixed=T)[[1]][1] %in% runAccessions)){next}
         locality_ID <- paste(queryMetadata_object$Event$locality[which(runAccessions == strsplit(file,".", fixed=T)[[1]][1])], queryMetadata_object$fastqMetadata$identifier[which(runAccessions == strsplit(file,".", fixed=T)[[1]][1])], sep = "_")
-        filename<-sub(pattern = "[A-Z]+[0-9]+\\.*s*r*a*",replacement = locality_ID, file, perl=T)
+        filename<-sub(pattern = ".sra", replacement = "", x = file, fixed=T)
+        filename<-sub(pattern = "[A-Z]{3}[0-9]+([12_]*\\.[a-z]+)",replacement = paste0(locality_ID,"\\1"), filename, perl=T)
         print(paste("Renaming",file,"to",filename))
         file.rename(from = file.path(outputDirectory,file), to = file.path(outputDirectory,filename))
       }
@@ -209,7 +243,8 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory
       for(file in list.files(path=outputDirectory, pattern=".fastq")){  
         #if the accession number part of the filename is NOT in the queryMetadata_object, skip it
         if(!(strsplit(file,".",fixed=T)[[1]][1] %in% runAccessions)){next}
-        filename<-sub(pattern = "([A-Z]+[0-9]+).*s*r*a*",replacement = "\\1", file, perl=T)
+        filename<-sub(pattern = ".sra", replacement = "", x = file, fixed=T)
+        filename<-sub(pattern = "([A-Z]{3}[0-9]+[12_]*)\\.[a-z]+",replacement = paste0("\\1",".fastq"), filename, perl=T)
         print(paste("Renaming",file,"to",filename))
         file.rename(from = file.path(outputDirectory,file), to = file.path(outputDirectory,filename))
       }
@@ -222,6 +257,10 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory
       }
     }
   
+    #get an end time and measure the length of the run
+    end <- Sys.time()
+    print(paste("Finish:", end))
+    print(end - start)
 }
 
 
@@ -236,6 +275,10 @@ prefetch <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory 
     }
     stop("Showing prefetch help and quitting")
   }
+  
+  # get a start time
+  start<-Sys.time()
+  print(paste("Start:", start))
   
   if(is.null(queryMetadata_object$fastqMetadata)){
     stop(paste(queryMetadata_object,"does not have any fastq metadata"))
@@ -253,6 +296,10 @@ prefetch <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory 
     }
   } 
   
+  #get an end time and measure the length of the run
+  end <- Sys.time()
+  print(paste("Finish:", end))
+  print(end - start)
 }
 
 
