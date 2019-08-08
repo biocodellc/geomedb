@@ -5,15 +5,16 @@
 # to have been downloaded. The user can either add them to the $PATH or supply a path
 # to the functions.
 
-#' Download fastq data from NCBI Sequence Read Archive using multiple threads
+#' Download or convert fastq data from NCBI Sequence Read Archive using multiple threads
 #' 
 #' `fasterqDump()` uses the SRAtoolkit command-line function `fasterq-dump` to download fastq
 #' files from all samples returned by a [queryMetadata()] query of GEOME, when one of the
 #' entities queried was `fastqMetadata`
 #' 
 #' The `fasterq-dump` tool uses temporary files and multi-threading to speed up the extraction of FASTQ from SRA-accessions.
-#' This function works best with sratoolkit functions of version 2.9.6 or greater. 
-#' It downloads files to the current working directory unless a different one is assigned through outputDirectory.
+#' This function works best with sratoolkit functions of version 2.9.6 or greater. \href{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/}{SRAtoolkit} functions can (ideally)
+#' be in your $PATH, or you can supply a path to them using the sratoolkitPath argument.
+#' `fasterqDump()` downloads files to the current working directory unless a different one is assigned through outputDirectory.
 #' Change the number of threads by adding "-e X" to arguments where X is the number of threads
 #' `fasterq-dump` will automatically split paired-end data into three files with:
 #'  file_1.fastq having read 1
@@ -21,7 +22,7 @@
 #'  file.fastq having unmatched reads
 #' `fasterqDump()` can then rename these files based on their materialSampleID and locality.
 #' Note that `fasterq-dump` will store temporary files in ~/ncbi/public/sra by default unless
-#' you pass "-t /path/to/temp/dir" to arguments.
+#' you pass "-t /path/to/temp/dir" to arguments. \emph{Make sure to periodically delete these temporary files.}
 #' 
 #' @param queryMetadata_object A list object returned from `queryMetadata` where one of the 
 #'  entities queried was `fastqMetadata`.
@@ -43,11 +44,11 @@
 #' 
 #' @return This function will not return anything within r. It simply downloads fastq files. It will print command line
 #' stdout to the console, and also provide a start and end time and amount of time elapsed during the download.
-#' @seealso <https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/> to download pre-compiled executables for sratoolkit or
-#' <https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source> to install from source
+#' @seealso \url{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/} to download pre-compiled executables for sratoolkit or
+#' \url{https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source>} to install from source
 #' 
 #' This function will not work on Windows systems because fasterq-dump is not currently available for Windows. 
-#' See [fastqDump()] if you use Windows. See [prefetch()] to download .sra files prior to converting them locally.
+#' See \code{\link{fastqDump()}} if you use Windows. See \code{\link{prefetch()}} to download .sra files prior to converting them locally.
 #' 
 #' 
 #' @examples
@@ -177,14 +178,15 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
 
 
 
-#' Download fastq data from NCBI Sequence Read Archive in a single thread
+#' Download or convert fastq data from NCBI Sequence Read Archive in a single thread (Windows compatible)
 #' 
 #' `fastqDump()` uses the SRAtoolkit command-line function `fastq-dump` to download fastq
 #' files from all samples returned by a [queryMetadata()] query of GEOME, when one of the
 #' entities queried was `fastqMetadata`
 #' 
-#' This function works best with sratoolkit functions of version 2.9.6 or greater. 
-#' It downloads files to the current working directory unless a different one is assigned through outputDirectory.
+#' This function works best with sratoolkit functions of version 2.9.6 or greater. \href{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/}{SRAtoolkit} functions can (ideally)
+#' be in your $PATH, or you can supply a path to them using the sratoolkitPath argument.
+#' `fastqDump()` downloads files to the current working directory unless a different one is assigned through outputDirectory.
 #' 
 #' `fastq-dump` will automatically split paired-end data into three files with:
 #'  file_1.fastq having read 1
@@ -213,12 +215,12 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
 #' 
 #' @return This function will not return anything within r. It simply downloads fastq files. It will print command line
 #' stdout to the console, and also provide a start and end time and amount of time elapsed during the download.
-#' @seealso <https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/> to download pre-compiled executables for sratoolkit or
-#' <https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source> to install from source
+#' @seealso \url{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/} to download pre-compiled executables for sratoolkit or
+#' \url{https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source>} to install from source
 #' 
-#' See [prefetch()] to download .sra files prior to converting them locally. This two step process works faster than
+#' See \code{\link{prefetch()}} to download .sra files prior to converting them locally. This two step process works faster than
 #' just using `fastqDump()`.
-#' See [fasterqDump()] for a faster, multithreaded version of `fastqDump()` that does not work on Windows.
+#' See \code{\link{fasterqDump()}} for a faster, multithreaded version of `fastqDump()` that does not work on Windows.
 #' 
 #' 
 #' @examples
@@ -352,7 +354,8 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory 
 #' files from all samples returned by a [queryMetadata()] query of GEOME, when one of the
 #' entities queried was `fastqMetadata`
 #' 
-#' This function works best with sratoolkit functions of version 2.9.6 or greater. 
+#' This function works best with SRAtoolkit functions of version 2.9.6 or greater. \href{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/}{SRAtoolkit} functions can (ideally)
+#' be in your $PATH, or you can supply a path to them using the sratoolkitPath argument.
 #' It downloads files to the current working directory unless a different one is assigned through outputDirectory.
 #' `prefetch` will automatically use the Fast and Secure Protocol (FASP) in the \href{https://downloads.asperasoft.com/connect2/}{Aspera Connect}
 #' package if the `ascp` executable is in your $PATH. Otherwise it will use HTTPS.
@@ -370,10 +373,10 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory 
 #' 
 #' @return This function will not return anything within r. It simply downloads .sra files. It will print command line
 #' stdout to the console, and also provide a start and end time and amount of time elapsed during the download.
-#' @seealso <https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/> to download pre-compiled executables for sratoolkit or
-#' <https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source> to install from source
+#' @seealso \url{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/} to download pre-compiled executables for sratoolkit or
+#' \url{https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source>} to install from source
 #' 
-#' Use `prefetch` in combination with [fastqDump()] or [fasterqDump()] to convert .sra files to .fastq.
+#' Use `prefetch` in combination with \code{\link{fastqDump()}} or \code{\link{fasterqDump()}} to convert .sra files to .fastq.
 #' 
 #' 
 #' @examples

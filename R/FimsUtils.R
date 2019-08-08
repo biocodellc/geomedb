@@ -77,7 +77,7 @@ listEntities <- function(projectId=NA) {
     return(entities)
 }
 
-#' get a list of loci that are stored in FASTA format directly in GEOME (not in the SRA)
+#' Get a list of loci that are stored in FASTA format directly in GEOME (not in the SRA)
 #' @examples
 #' \dontrun{
 #' markers <- listLoci()
@@ -101,7 +101,7 @@ listLoci <- function() {
     return(markers)
 }
 
-#' Fetch metadata from the GEOME database.
+#' Query metadata from the GEOME database.
 #' 
 #' `queryMetadata` uses HTTP to query metadata from the GEOME database. If you are looking to download associated
 #' sequences from the SRA, you must include 'fastqMetadata' as one of the entities searched (this is done by default)
@@ -109,10 +109,11 @@ listLoci <- function() {
 #' sequences
 #'
 #' @param entity      The entity or entities (tables) to query. Multiple entities can be given as a vector.
-#'  One or more of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo','fastqMetadata'). Default is to include 'fastqMetadata'
+#'  One or more of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo','fastqMetadata'). Default is to include 'Samples'
 #' @param projects    list of projects to include in the query. The default is all projects
 #' @param expeditions Only applicable if projects are specified. list of expeditions to include in the query. The default is all expeditions
-#' @param select      list of entites to include in the response. The @param `entity` will always be included in the response.
+#' @param select      list of entites to include in the response. The @param `entity` will always be included in the response. `fastqMetadata`
+#'                    included by default.
 #' @param source      list of column names to include in the data.frame results. If there is no entity prefix, the column
 #'                    is assumed to belong to the @param `entity`.
 #'                    Ex. list('Event.eventID', 'Event.locality', 'materialSampleID', 'bcid', 'Event.bcid')
@@ -137,7 +138,7 @@ listLoci <- function() {
 #'           query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event"))
 #' }
 #' @export
-queryMetadata <- function(entity = "fastqMetadata", projects=list(), expeditions=list(), select=list(), query="", source=NULL, page=0, limit="10000") {
+queryMetadata <- function(entity = "Sample", projects=list(), expeditions=list(), select=list("fastqMetadata"), query="", source=NULL, page=0, limit="10000") {
     query.string <- prepareQueryString(projects, expeditions, select, query)
 
     if (!is.null(source)) {
@@ -162,7 +163,7 @@ queryMetadata <- function(entity = "fastqMetadata", projects=list(), expeditions
     }
 }
 
-#' Fetch fasta sequences directly from the GEOME database
+#' Query Sanger sequences directly from the GEOME database
 #' 
 #' For Sanger sequence data (typically of mitochondrial origin), it is possible to store the sequence directly within GEOME.
 #' `querySanger()` allows you to download this sequence data into a DNAbin object, as well as to your working directory as a
