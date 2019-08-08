@@ -181,7 +181,7 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
 #' 
 #' This function works best with sratoolkit functions of version 2.9.6 or greater. 
 #' It downloads files to the current working directory unless a different one is assigned through outputDirectory.
-#' Change the number of threads by adding "-e X" to arguments where X is the number of threads
+#' 
 #' `fastq-dump` will automatically split paired-end data into three files with:
 #'  file_1.fastq having read 1
 #'  file_2.fastq having read 2
@@ -339,8 +339,53 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory 
 }
 
 
-#' mention aspera connect and how to install it.
-prefetch <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory = ".", outputDirectory = ".", arguments = "-p 1", prefetchHelp = FALSE) {
+
+#' Download data from NCBI Sequence Read Archive in .sra format using FASP or HTTPS protocols
+#' 
+#' `prefetch()` uses the SRAtoolkit command-line function `prefetch` to download .sra
+#' files from all samples returned by a [queryMetadata()] query of GEOME, when one of the
+#' entities queried was `fastqMetadata`
+#' 
+#' This function works best with sratoolkit functions of version 2.9.6 or greater. 
+#' It downloads files to the current working directory unless a different one is assigned through outputDirectory.
+#' `prefetch` will automatically use the Fast and Secure Protocol (FASP) in the \href{https://downloads.asperasoft.com/connect2/}{Aspera Connect}
+#' package if the `ascp` executable is in your $PATH. Otherwise it will use HTTPS.
+#' You can alternatively pass the path to `ascp` by using arguments="-a path/to/ascp"
+#' 
+#' @param queryMetadata_object A list object returned from `queryMetadata` where one of the 
+#'  entities queried was `fastqMetadata`.
+#' @param sratoolkitPath String. A path to a local copy of sratoolkit. Only necessary if sratoolkit
+#'  is not on your $PATH. Assumes executables are inside `bin`.
+#' @param outputDirectory String. A path to the directory where you would like the files to be stored.
+#' @param arguments A string variable of arguments to be passed directly to `prefetch`.
+#' Defaults to "-p 1" to show progress.
+#' Use prefetchHelp = TRUE to see a list of arguments.
+#' @param prefetchHelp Logical. prefetchHelp = T will show the help page for `prefetch` and then quit.
+#' 
+#' @return This function will not return anything within r. It simply downloads .sra files.
+#' @seealso <https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/> to download pre-compiled executables for sratoolkit or
+#' <https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source> to install from source
+#' 
+#' Use `prefetch` in combination with [fastqDump()] or [fasterqDump()] to convert .sra files to .fastq.
+#' 
+#' 
+#' @examples
+#' \donttest{
+#' # Run a query of GEOME first
+#' acaoli <- queryMetadata(entity = "fastqMetadata", 
+#' query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event"))
+#' 
+#' #trim to 3 entries for expediency
+#' acaoli$fastqMetadata<-acaoli$fastqMetadata[1:3,]
+#' acaoli$Event<-acaoli$Event[1:3,]
+#' 
+#' 
+#' prefetch(queryMetadata_object = acaoli)
+#' 
+#' fastqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", cleanup = T)
+#' }
+
+prefetch <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory = ".", arguments = "-p 1", prefetchHelp = FALSE) {
   
   if(prefetchHelp == TRUE){
     if(sratoolkitPath != ""){
@@ -359,8 +404,6 @@ prefetch <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory 
   if(is.null(queryMetadata_object$fastqMetadata)){
     stop(paste(queryMetadata_object,"does not have any fastq metadata"))
   }
-  
-  setwd(workingDirectory)
   
   for(accession_number in queryMetadata_object$fastqMetadata$bioSample$experiment$runAccessions){
     print(accession_number)
