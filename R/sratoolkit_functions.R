@@ -20,6 +20,8 @@
 #'  file_2.fastq having read 2
 #'  file.fastq having unmatched reads
 #' `fasterqDump()` can then rename these files based on their materialSampleID and locality.
+#' Note that `fasterq-dump` will store temporary files in ~/ncbi/public/sra by default unless
+#' you pass "-t /path/to/temp/dir" to arguments.
 #' 
 #' @param queryMetadata_object A list object returned from `queryMetadata` where one of the 
 #'  entities queried was `fastqMetadata`.
@@ -39,7 +41,8 @@
 #' @param cleanup Logical. cleanup = T will delete any intermediate .sra files.
 #' @param fasterqDumpHelp Logical. fasterqDumpHelp = T will show the help page for `fasterq-dump` and then quit.
 #' 
-#' @return This function will not return anything within r. It simply downloads fastq files.
+#' @return This function will not return anything within r. It simply downloads fastq files. It will print command line
+#' stdout to the console, and also provide a start and end time and amount of time elapsed during the download.
 #' @seealso <https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/> to download pre-compiled executables for sratoolkit or
 #' <https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source> to install from source
 #' 
@@ -58,13 +61,14 @@
 #' acaoli$Event<-acaoli$Event[1:3,]
 #' 
 #' # Download straight from SRA, naming files with their locality and materialSampleID
-#' fasterqDump(queryMetadata_object = acaoli, filenames = "locality_IDs", source = "sra")
+#' fasterqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "sra")
 #' 
 #' # A generally faster option is to run prefetch first, followed by fasterqDump, with cleanup = T to remove the 
 #' # prefetched .sra files.
 #' prefetch(queryMetadata_object = acaoli)
 #' fasterqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", cleanup = T)
 #' }
+#' @export
 fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory = "./", arguments = "-p", filenames = "accessions", source = "sra",cleanup = FALSE, fasterqDumpHelp = FALSE) {
   
   if(fasterqDumpHelp == TRUE){
@@ -207,7 +211,8 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
 #' @param cleanup Logical. cleanup = T will delete any intermediate .sra files.
 #' @param fastqDumpHelp Logical. fastqDumpHelp = T will show the help page for `fastq-dump` and then quit.
 #' 
-#' @return This function will not return anything within r. It simply downloads fastq files.
+#' @return This function will not return anything within r. It simply downloads fastq files. It will print command line
+#' stdout to the console, and also provide a start and end time and amount of time elapsed during the download.
 #' @seealso <https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/> to download pre-compiled executables for sratoolkit or
 #' <https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source> to install from source
 #' 
@@ -234,6 +239,7 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
 #' prefetch(queryMetadata_object = acaoli)
 #' fastqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", cleanup = T)
 #' }
+#' @export
 fastqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory = ".", arguments = "-v --split-3", filenames = "accessions", source = "sra", cleanup = FALSE, fastqdumpHelp = FALSE) {
 
     if(fastqdumpHelp == TRUE){
@@ -362,7 +368,8 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory 
 #' Use prefetchHelp = TRUE to see a list of arguments.
 #' @param prefetchHelp Logical. prefetchHelp = T will show the help page for `prefetch` and then quit.
 #' 
-#' @return This function will not return anything within r. It simply downloads .sra files.
+#' @return This function will not return anything within r. It simply downloads .sra files. It will print command line
+#' stdout to the console, and also provide a start and end time and amount of time elapsed during the download.
 #' @seealso <https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/> to download pre-compiled executables for sratoolkit or
 #' <https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source> to install from source
 #' 
@@ -384,7 +391,7 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory 
 #' 
 #' fastqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", cleanup = T)
 #' }
-
+#' @export
 prefetch <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory = ".", arguments = "-p 1", prefetchHelp = FALSE) {
   
   if(prefetchHelp == TRUE){

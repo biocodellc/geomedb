@@ -11,7 +11,7 @@ fimsProjectConfigUrl<- paste(fimsRestRoot, "projects", "_projectId_", "config", 
 fimsQueryUrl <- paste(fimsRestRoot, "records", "_entity_", "json", sep="/")
 fimsFastaQueryUrl <- paste(fimsRestRoot, "records", "fastaSequence", "fasta", sep="/")
 
-#' get a list of projects
+#' Get a list of projects in GEOME
 #' @examples
 #' \dontrun{
 #' projects <- listProjects()
@@ -31,7 +31,7 @@ listProjects <- function() {
     return(projects)
 }
 
-#' get a list of expeditions for a project
+#' Get a list of expeditions for a GEOME project
 #' @param projectId The project to list expeditions for.
 #' @examples
 #' \dontrun{
@@ -52,7 +52,7 @@ listExpeditions <- function(projectId) {
     return(expeditions)
 }
 
-#' get a list of entities available to query
+#' Get a list of entities (i.e. tables) available to query
 #' @param projectId   (optional) The project to fetch entities for. If not provided, the network entities will be returned.
 #' @examples
 #' \dontrun{
@@ -77,13 +77,13 @@ listEntities <- function(projectId=NA) {
     return(entities)
 }
 
-#' get a list of fasta markers
+#' get a list of loci that are stored in FASTA format directly in GEOME (not in the SRA)
 #' @examples
 #' \dontrun{
-#' markers <- listMarkers()
+#' markers <- listLoci()
 #' }
 #' @export
-listMarkers <- function() {
+listLoci <- function() {
 
     r <- httr::GET(fimsNetworkConfigUrl)
     stop_for_status(r)
@@ -101,9 +101,15 @@ listMarkers <- function() {
     return(markers)
 }
 
-#' fetch the FimsMetadata from the geome-db database
+#' Fetch metadata from the GEOME database.
+#' 
+#' `queryMetadata` uses HTTP to query metadata from the GEOME database. If you are looking to download associated
+#' sequences from the SRA, you must include 'fastqMetadata' as one of the entities searched (this is done by default)
+#' and you should include "_exists_:bioSample" within your query statement to find only samples with associated SRA
+#' sequences
 #'
-#' @param entity      The entity to query. One of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo')
+#' @param entity      The entity or entities (tables) to query. Multiple entities can be given as a vector.
+#'  One or more of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo','fastqMetadata'). Default is to include 'fastqMetadata'
 #' @param projects    list of projects to include in the query. The default is all projects
 #' @param expeditions Only applicable if projects are specified. list of expeditions to include in the query. The default is all expeditions
 #' @param select      list of entites to include in the response. The @param `entity` will always be included in the response.
@@ -111,11 +117,12 @@ listMarkers <- function() {
 #'                    is assumed to belong to the @param `entity`.
 #'                    Ex. list('Event.eventID', 'Event.locality', 'materialSampleID', 'bcid', 'Event.bcid')
 #'                          'materialSampleID' and 'bcid' in the above list are assumed to belong to the @param `entity`
-#' @param query       FIMS Query DSL \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
-#'                    Ex. 'yearCollected >= 2017 and country = "Indonesia"'
+#' @param query       FIMS Query statement \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
+#'                    Ex. 'yearCollected >= 2017 and country = "Indonesia"'. Your query must include "_exists_:bioSample"
+#'                    to find samples that have associated data in the SRA.
 #' @param page        The results page to return. Used to offset the page for large result sets. Defaults to 0.
 #' @param limit       The number of results to include in the response. Defaults to 10000
-#' return: a dataframe object
+#' @return a list object with each entity (table) as a dataframe object
 #' @examples
 #' \dontrun{
 #' df <- queryMetadata('Sample', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"))
@@ -126,9 +133,11 @@ listMarkers <- function() {
 #'                     query="yearCollected=2008")
 #' df <- queryMetadata('fastqMetadata', select=list('Event', 'Sample', 'Tissue'),
 #'                     query="_exists_:bioSample")
+#' acaoli <- queryMetadata(entity = "fastqMetadata", 
+#'           query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event"))
 #' }
 #' @export
-queryMetadata <- function(entity, projects=list(), expeditions=list(), select=list(), query="", source=NULL, page=0, limit="10000") {
+queryMetadata <- function(entity = "fastqMetadata", projects=list(), expeditions=list(), select=list(), query="", source=NULL, page=0, limit="10000") {
     query.string <- prepareQueryString(projects, expeditions, select, query)
 
     if (!is.null(source)) {
@@ -153,27 +162,34 @@ queryMetadata <- function(entity, projects=list(), expeditions=list(), select=li
     }
 }
 
-#' fetch Fasta sequences from the geome-db database
+#' Fetch fasta sequences directly from the GEOME database
+#' 
+#' For Sanger sequence data (typically of mitochondrial origin), it is possible to store the sequence directly within GEOME.
+#' `querySanger()` allows you to download this sequence data into a DNAbin object, as well as to your working directory as a
+#' FASTA-formatted file.
 #'
-#' @param marker      the marker to fetch. list of markers can be found by calling `listMarkers()`
+#' @param locus      the locus to fetch. list of markers can be found by calling `listLoci()`
 #' @param projects    list of projects to include in the query. The default is all projects
 #' @param expeditions Only applicable if projects are specified. list of expeditions to include in the query. The default is all expeditions
 #' @param query       FIMS Query DSL \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
 #'                    Ex. 'yearCollected >= 2017 and country = "Indonesia"'
-#' return: a DNAbin object, which is a fairly standard form for storing DNA data in binary format
+#' @return a DNAbin object, which is a fairly standard form for storing DNA data in binary format. It will also download
+#' a FASTA-formatted file to your working directory.
 #' @examples
 #' \dontrun{
-#' fasta <- queryFasta('CYB', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"),
+#' data <- querySanger(locus = 'CYB', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"),
 #'                      query="yearCollected >= 2008")
+#'  
+#' data <- querySanger(locus = 'CO1', query = "genus = Linckia AND specificEpithet = laevigata" )
 #' }
 #' @export
-queryFasta <- function(marker, projects=list(), expeditions=list(), query="") {
+querySanger <- function(locus, projects=list(), expeditions=list(), query="") {
     query.string <- prepareQueryString(projects, expeditions, list(), query)
 
     if (nchar(query.string) > 0 && query.string != '*') {
-        query.string <- paste0("(", query.string, ") AND ", 'fastaSequence.marker = ', marker)
+        query.string <- paste0("(", query.string, ") AND ", 'fastaSequence.marker = ', locus)
     } else {
-        query.string <- paste0('fastaSequence.marker = ', marker)
+        query.string <- paste0('fastaSequence.marker = ', locus)
     }
     
     r <- httr::GET(fimsFastaQueryUrl, query=list(q = query.string))
@@ -192,7 +208,7 @@ queryFasta <- function(marker, projects=list(), expeditions=list(), query="") {
 
         writeBin(httr::content(fileResponse, "raw"), temp)
 
-        filename <- paste0(marker, ".fasta")
+        filename <- paste0(locus, ".fasta")
         utils::unzip(temp, files=filename)
 
         if (file.info(filename)$size == 0) {
