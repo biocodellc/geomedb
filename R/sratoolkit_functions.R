@@ -1,15 +1,25 @@
 #!/usr/bin/env Rscript
 
 # These functions use the sratoolkit to download fastq files associated with GEOME metadata
-# that have been queried via queryMetadata() function in FimsUtils.R. They require sratoolkit
+# that have been queried via `queryMetadata()`` function in FimsUtils.R. They require sratoolkit
 # to have been downloaded. The user can either add them to the $PATH or supply a path
 # to the functions.
 
-#' Download fastq data from NCBI Sequence Read Archive
+#' Download fastq data from NCBI Sequence Read Archive using multiple threads
 #' 
-#' `fasterqDump` uses the SRAtoolkit command-line function `fasterq-dump` to download fastq
-#' files from all samples returned by a `queryMetadata` query of GEOME, when one of the
+#' `fasterqDump()` uses the SRAtoolkit command-line function `fasterq-dump` to download fastq
+#' files from all samples returned by a [queryMetadata()] query of GEOME, when one of the
 #' entities queried was `fastqMetadata`
+#' 
+#' The `fasterq-dump` tool uses temporary files and multi-threading to speed up the extraction of FASTQ from SRA-accessions.
+#' This function works best with sratoolkit functions of version 2.9.6 or greater. 
+#' It downloads files to the current working directory unless a different one is assigned through outputDirectory.
+#' Change the number of threads by adding "-e X" to arguments where X is the number of threads
+#' `fasterq-dump` will automatically split paired-end data into three files with:
+#'  file_1.fastq having read 1
+#'  file_2.fastq having read 2
+#'  file.fastq having unmatched reads
+#' `fasterqDump()` can then rename these files based on their materialSampleID and locality.
 #' 
 #' @param queryMetadata_object A list object returned from `queryMetadata` where one of the 
 #'  entities queried was `fastqMetadata`.
@@ -17,7 +27,7 @@
 #'  is not on your $PATH. Assumes executables are inside `bin`.
 #' @param outputDirectory String. A path to the directory where you would like the files to be stored.
 #' @param arguments A string variable of arguments to be passed directly to `fasterq-dump`.
-#' Defaults to "-p" to show progress. Use fasterqDumpHelp = FALSE to see a list of arguments.
+#' Defaults to "-p" to show progress. Use fasterqDumpHelp = TRUE to see a list of arguments.
 #' @param filenames String. How would you like the downloaded fastq files to be named?  
 #' "accessions" names files with SRA accession numbers
 #' "IDs" names files with their materialSampleID
@@ -33,9 +43,9 @@
 #' @seealso <https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/> to download pre-compiled executables for sratoolkit or
 #' <https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source> to install from source
 #' 
-#' This function works best with sratoolkit functions of version 2.9.6 or greater. It will not work on Windows systems
-#' because fasterq-dump is not currently available for Windows. See `fastqDump` if you use Windows. 
-#' It downloads files to the current working directory. unless a different one is assigned through outputDirectory.
+#' This function will not work on Windows systems because fasterq-dump is not currently available for Windows. 
+#' See [fastqDump()] if you use Windows. See [prefetch()] to download .sra files prior to converting them locally.
+#' 
 #' 
 #' @examples
 #' \donttest{
@@ -53,7 +63,7 @@
 #' # A generally faster option is to run prefetch first, followed by fasterqDump, with cleanup = T to remove the 
 #' # prefetched .sra files.
 #' prefetch(queryMetadata_object = acaoli)
-#' fasterqDump(queryMetadata_object = acaoli, filenames = "locality_IDs", source = "local", cleanup = T)
+#' fasterqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", cleanup = T)
 #' }
 fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory = "./", arguments = "-p", filenames = "accessions", source = "sra",cleanup = FALSE, fasterqDumpHelp = FALSE) {
   
@@ -157,8 +167,73 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
   print(paste("Finish:", end))
   print(end - start)
   
-  }
+}
 
+
+
+
+
+#' Download fastq data from NCBI Sequence Read Archive in a single thread
+#' 
+#' `fastqDump()` uses the SRAtoolkit command-line function `fastq-dump` to download fastq
+#' files from all samples returned by a [queryMetadata()] query of GEOME, when one of the
+#' entities queried was `fastqMetadata`
+#' 
+#' This function works best with sratoolkit functions of version 2.9.6 or greater. 
+#' It downloads files to the current working directory unless a different one is assigned through outputDirectory.
+#' Change the number of threads by adding "-e X" to arguments where X is the number of threads
+#' `fastq-dump` will automatically split paired-end data into three files with:
+#'  file_1.fastq having read 1
+#'  file_2.fastq having read 2
+#'  file.fastq having unmatched reads
+#' `fastqDump()` can then rename these files based on their materialSampleID and locality.
+#' 
+#' @param queryMetadata_object A list object returned from `queryMetadata` where one of the 
+#'  entities queried was `fastqMetadata`.
+#' @param sratoolkitPath String. A path to a local copy of sratoolkit. Only necessary if sratoolkit
+#'  is not on your $PATH. Assumes executables are inside `bin`.
+#' @param outputDirectory String. A path to the directory where you would like the files to be stored.
+#' @param arguments A string variable of arguments to be passed directly to `fastq-dump`.
+#' Defaults to "-v --split 3" to show progress and split paired-end data. 
+#' Use fastqDumpHelp = TRUE to see a list of arguments.
+#' @param filenames String. How would you like the downloaded fastq files to be named?  
+#' "accessions" names files with SRA accession numbers
+#' "IDs" names files with their materialSampleID
+#' "locality_IDs" names files with their locality and materialSampleID.
+#' @param source String. `fastq-dump` can retrieve files directly from SRA, or it can convert .sra files
+#'  previously downloaded with `prefetch` that are in the current working directory. 
+#'  "sra" downloads from SRA
+#'  "local" converts .sra files in the current working directory.
+#' @param cleanup Logical. cleanup = T will delete any intermediate .sra files.
+#' @param fastqDumpHelp Logical. fastqDumpHelp = T will show the help page for `fastq-dump` and then quit.
+#' 
+#' @return This function will not return anything within r. It simply downloads fastq files.
+#' @seealso <https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/> to download pre-compiled executables for sratoolkit or
+#' <https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source> to install from source
+#' 
+#' See [prefetch()] to download .sra files prior to converting them locally. This two step process works faster than
+#' just using `fastqDump()`.
+#' See [fasterqDump()] for a faster, multithreaded version of `fastqDump()` that does not work on Windows.
+#' 
+#' 
+#' @examples
+#' \donttest{
+#' # Run a query of GEOME first
+#' acaoli <- queryMetadata(entity = "fastqMetadata", 
+#' query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event"))
+#' 
+#' #trim to 3 entries for expediency
+#' acaoli$fastqMetadata<-acaoli$fastqMetadata[1:3,]
+#' acaoli$Event<-acaoli$Event[1:3,]
+#' 
+#' # Download straight from SRA, naming files with their locality and materialSampleID
+#' fastqDump(queryMetadata_object = acaoli, filenames = "locality_IDs", source = "sra")
+#' 
+#' # A generally faster option is to run prefetch first, followed by fastqDump, with cleanup = T to remove the 
+#' # prefetched .sra files.
+#' prefetch(queryMetadata_object = acaoli)
+#' fastqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", cleanup = T)
+#' }
 fastqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory = ".", arguments = "-v --split-3", filenames = "accessions", source = "sra", cleanup = FALSE, fastqdumpHelp = FALSE) {
 
     if(fastqdumpHelp == TRUE){
@@ -264,6 +339,7 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory 
 }
 
 
+#' mention aspera connect and how to install it.
 prefetch <-function(queryMetadata_object, sratoolkitPath = "", workingDirectory = ".", outputDirectory = ".", arguments = "-p 1", prefetchHelp = FALSE) {
   
   if(prefetchHelp == TRUE){
