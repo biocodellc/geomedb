@@ -34,9 +34,12 @@ entities queried was `fastqMetadata`
 \details{
 This function works best with SRAtoolkit functions of version 2.9.6 or greater. \href{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/}{SRAtoolkit} functions can (ideally)
 be in your $PATH, or you can supply a path to them using the sratoolkitPath argument.
+
 It downloads files to the current working directory unless a different one is assigned through outputDirectory.
+
 `prefetch` will automatically use the Fast and Secure Protocol (FASP) in the \href{https://downloads.asperasoft.com/connect2/}{Aspera Connect}
 package if the `ascp` executable is in your $PATH. Otherwise it will use HTTPS.
+
 You can alternatively pass the path to `ascp` by using arguments="-a path/to/ascp"
 }
 \examples{

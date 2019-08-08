@@ -1,31 +1,35 @@
-#' geomedb: The Genomic Observatory Metadatabase (GeOMe Database) is an open access repository for
+#' geomedb - an R package for querying metadata and associated genetic sequences from GEOME
+#' 
+#' The Genomic Observatory Metadatabase (GEOME Database) is an open access repository for
 #' geographic and ecological metadata associated with sequenced samples. This package is used to retrieve
-#' GeOMe data for analysis. See <http://www.geome-db.org> for more information regarding GeOMe.
+#' GeOMe data for analysis. See \url{http://www.geome-db.org} for more information regarding GeOMe.
 #' 
 #' The geomedb package provides functions for querying GEOME directly, as well as wrappers for
 #' \href{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/}{sratoolkit} executables. When used together, it is possible
 #' to download all metadata relevant to your query from GEOME and then download all associated SRA sequences.
 #' 
 #' @section GEOME Query Functions:
+#' \itemize{
 #' 
-#' \code{\link{listProjects()}}: Get a list of projects in GEOME
-#' \code{\link{listExpeditions()}}: Get a list of expeditions for a GEOME project
-#' \code{\link{listEntities()}}: Get a list of entities (i.e. tables) available to query
-#' \code{\link{listLoci()}}: Get a list of loci that are stored in FASTA format directly in GEOME (not in the SRA)
-#' \code{\link{queryMetadata()}}: Query metadata from the GEOME database
-#' \code{\link{querySanger()}}: Query Sanger sequences directly from the GEOME database
+#' \item \code{\link{listProjects()}}: Get a list of projects in GEOME
+#' \item \code{\link{listExpeditions()}}: Get a list of expeditions for a GEOME project
+#' \item \code{\link{listEntities()}}: Get a list of entities (i.e. tables) available to query
+#' \item \code{\link{listLoci()}}: Get a list of loci that are stored in FASTA format directly in GEOME (not in the SRA)
+#' \item \code{\link{queryMetadata()}}: Query metadata from the GEOME database
+#' \item \code{\link{querySanger()}}: Query Sanger sequences directly from the GEOME database
+#' }
 #' 
 #' @section SRAtoolkit Functions:
+#' \itemize{
+#' \item \code{\link{fasterqDump()}}: Download or convert fastq data from NCBI Sequence Read Archive using multiple threads
+#' \item \code{\link{fastqDump()}}: Download or convert fastq data from NCBI Sequence Read Archive in a single thread (Windows compatible)
+#' \item \code{\link{prefetch()}}: Download data from NCBI Sequence Read Archive in .sra format using FASP or HTTPS protocols
+#' }
 #' 
-#' \code{\link{fasterqDump()}}: Download or convert fastq data from NCBI Sequence Read Archive using multiple threads
-#' \code{\link{fastqDump()}}: Download or convert fastq data from NCBI Sequence Read Archive in a single thread (Windows compatible)
-#' \code{\link{prefetch()}}: Download data from NCBI Sequence Read Archive in .sra format using FASP or HTTPS protocols
+#' @section Example Usage:
 #' 
-#' 
-#' @section Examples:
-#' 
-#' Inggat is working on Orangebar Tang (Acanthurus olivaceus) in the Philippines, and would like to download any genetic data
-#' that may be available from previous research.
+#' Inggat is working on Orangebar Tang (\emph{Acanthurus olivaceus}) in the Philippines, and would like to download any genetic data
+#' that may be available in GEOME from previous research.
 #' 
 #' First, she searches for all GEOME samples of this species.
 #' 
@@ -39,8 +43,8 @@
 #' a DNAbin object as well as a FASTA file in her working directory.
 #' 
 #' \code{
-#' listLoci()
 #' 
+#'
 #' acaoli_seqs <- querySanger(projects = 1, marker = "CYB", query = "genus = Acanthurus AND specificEpithet = olivaceus")
 #' 
 #' }
@@ -67,9 +71,11 @@
 #' \code{
 #' 
 #' prefetch(queryMetadata_object = acaoli)
+
+#' }
 #' 
+#' \code{
 #' fasterqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", cleanup = T)
-#' 
 #' }
 #' 
 #'  This two-step approach is generally faster, but Inggat could also have simply used fasterqDump() to download fastq

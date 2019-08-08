@@ -108,13 +108,13 @@ listLoci <- function() {
 #' and you should include "_exists_:bioSample" within your query statement to find only samples with associated SRA
 #' sequences
 #'
-#' @param entity      The entity or entities (tables) to query. Multiple entities can be given as a vector.
-#'  One or more of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo','fastqMetadata'). Default is to include 'Samples'
-#' @param projects    list of projects to include in the query. The default is all projects
+#' @param entity      String. The entity or entities (tables) to query.
+#'  One of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo','fastqMetadata'). Default is to query 'Sample'
+#' @param projects    List of projects to include in the query. The default is all projects
 #' @param expeditions Only applicable if projects are specified. list of expeditions to include in the query. The default is all expeditions
-#' @param select      list of entites to include in the response. The @param `entity` will always be included in the response. `fastqMetadata`
-#'                    included by default.
-#' @param source      list of column names to include in the data.frame results. If there is no entity prefix, the column
+#' @param select      List of entities to include in the response. One of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo','fastqMetadata')
+#'                    The @param `entity` will always be included in the response. `fastqMetadata` included by default.
+#' @param source      List of column names to include in the data.frame results. If there is no entity prefix, the column
 #'                    is assumed to belong to the @param `entity`.
 #'                    Ex. list('Event.eventID', 'Event.locality', 'materialSampleID', 'bcid', 'Event.bcid')
 #'                          'materialSampleID' and 'bcid' in the above list are assumed to belong to the @param `entity`

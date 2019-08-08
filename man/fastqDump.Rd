@@ -42,19 +42,21 @@ stdout to the console, and also provide a start and end time and amount of time 
 }
 \description{
 `fastqDump()` uses the SRAtoolkit command-line function `fastq-dump` to download fastq
-files from all samples returned by a [queryMetadata()] query of GEOME, when one of the
+files from all samples returned by a \code{\link{queryMetadata()}} query of GEOME, when one of the
 entities queried was `fastqMetadata`
 }
 \details{
 This function works best with sratoolkit functions of version 2.9.6 or greater. \href{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/}{SRAtoolkit} functions can (ideally)
 be in your $PATH, or you can supply a path to them using the sratoolkitPath argument.
+
 `fastqDump()` downloads files to the current working directory unless a different one is assigned through outputDirectory.
 
 `fastq-dump` will automatically split paired-end data into three files with:
- file_1.fastq having read 1
- file_2.fastq having read 2
- file.fastq having unmatched reads
-`fastqDump()` can then rename these files based on their materialSampleID and locality.
+\itemize{
+ \item file_1.fastq having read 1
+ \item file_2.fastq having read 2
+ \item file.fastq having unmatched reads
+ }
 }
 \examples{
 \donttest{

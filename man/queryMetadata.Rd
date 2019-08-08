@@ -9,21 +9,21 @@ queryMetadata(entity = "Sample", projects = list(),
   source = NULL, page = 0, limit = "10000")
 }
 \arguments{
-\item{entity}{The entity or entities (tables) to query. Multiple entities can be given as a vector.
-One or more of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo','fastqMetadata'). Default is to include 'Samples'}
+\item{entity}{String. The entity or entities (tables) to query.
+One of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo','fastqMetadata'). Default is to query 'Sample'}
 
-\item{projects}{list of projects to include in the query. The default is all projects}
+\item{projects}{List of projects to include in the query. The default is all projects}
 
 \item{expeditions}{Only applicable if projects are specified. list of expeditions to include in the query. The default is all expeditions}
 
-\item{select}{list of entites to include in the response. The @param `entity` will always be included in the response. `fastqMetadata`
-included by default.}
+\item{select}{List of entities to include in the response. One of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo','fastqMetadata')
+The @param `entity` will always be included in the response. `fastqMetadata` included by default.}
 
 \item{query}{FIMS Query statement \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
 Ex. 'yearCollected >= 2017 and country = "Indonesia"'. Your query must include "_exists_:bioSample"
 to find samples that have associated data in the SRA.}
 
-\item{source}{list of column names to include in the data.frame results. If there is no entity prefix, the column
+\item{source}{List of column names to include in the data.frame results. If there is no entity prefix, the column
 is assumed to belong to the @param `entity`.
 Ex. list('Event.eventID', 'Event.locality', 'materialSampleID', 'bcid', 'Event.bcid')
       'materialSampleID' and 'bcid' in the above list are assumed to belong to the @param `entity`}
