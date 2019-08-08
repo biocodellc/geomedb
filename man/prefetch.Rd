@@ -28,7 +28,7 @@ stdout to the console, and also provide a start and end time and amount of time 
 }
 \description{
 `prefetch()` uses the SRAtoolkit command-line function `prefetch` to download .sra
-files from all samples returned by a [queryMetadata()] query of GEOME, when one of the
+files from all samples returned by a \code{\link{queryMetadata}} query of GEOME, when one of the
 entities queried was `fastqMetadata`
 }
 \details{
@@ -62,5 +62,5 @@ fastqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", cl
 \url{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/} to download pre-compiled executables for sratoolkit or
 \url{https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source>} to install from source
 
-Use `prefetch` in combination with \code{\link{fastqDump()}} or \code{\link{fasterqDump()}} to convert .sra files to .fastq.
+Use `prefetch` in combination with \code{\link{fastqDump}} or \code{\link{fasterqDump}} to convert .sra files to .fastq.
 }

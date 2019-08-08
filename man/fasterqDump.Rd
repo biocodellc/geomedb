@@ -40,7 +40,7 @@ stdout to the console, and also provide a start and end time and amount of time 
 }
 \description{
 `fasterqDump()` uses the SRAtoolkit command-line function `fasterq-dump` to download fastq
-files from all samples returned by a \code{\link{queryMetadata()}} query of GEOME, when one of the
+files from all samples returned by a \code{\link{queryMetadata}} query of GEOME, when one of the
 entities queried was `fastqMetadata`
 }
 \details{

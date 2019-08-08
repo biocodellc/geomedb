@@ -7,7 +7,7 @@
 fastqDump(queryMetadata_object, sratoolkitPath = "",
   outputDirectory = ".", arguments = "-v --split-3",
   filenames = "accessions", source = "sra", cleanup = FALSE,
-  fastqdumpHelp = FALSE)
+  fastqDumpHelp = FALSE)
 }
 \arguments{
 \item{queryMetadata_object}{A list object returned from `queryMetadata` where one of the 
@@ -42,7 +42,7 @@ stdout to the console, and also provide a start and end time and amount of time 
 }
 \description{
 `fastqDump()` uses the SRAtoolkit command-line function `fastq-dump` to download fastq
-files from all samples returned by a \code{\link{queryMetadata()}} query of GEOME, when one of the
+files from all samples returned by a \code{\link{queryMetadata}} query of GEOME, when one of the
 entities queried was `fastqMetadata`
 }
 \details{
@@ -81,7 +81,7 @@ fastqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", cl
 \url{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/} to download pre-compiled executables for sratoolkit or
 \url{https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source>} to install from source
 
-See \code{\link{prefetch()}} to download .sra files prior to converting them locally. This two step process works faster than
+See \code{\link{prefetch}} to download .sra files prior to converting them locally. This two step process works faster than
 just using `fastqDump()`.
-See \code{\link{fasterqDump()}} for a faster, multithreaded version of `fastqDump()` that does not work on Windows.
+See \code{\link{fasterqDump}} for a faster, multithreaded version of `fastqDump()` that does not work on Windows.
 }

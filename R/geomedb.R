@@ -11,19 +11,19 @@
 #' @section GEOME Query Functions:
 #' \itemize{
 #' 
-#' \item \code{\link{listProjects()}}: Get a list of projects in GEOME
-#' \item \code{\link{listExpeditions()}}: Get a list of expeditions for a GEOME project
-#' \item \code{\link{listEntities()}}: Get a list of entities (i.e. tables) available to query
-#' \item \code{\link{listLoci()}}: Get a list of loci that are stored in FASTA format directly in GEOME (not in the SRA)
-#' \item \code{\link{queryMetadata()}}: Query metadata from the GEOME database
-#' \item \code{\link{querySanger()}}: Query Sanger sequences directly from the GEOME database
+#' \item \code{\link{listProjects}}: Get a list of projects in GEOME
+#' \item \code{\link{listExpeditions}}: Get a list of expeditions for a GEOME project
+#' \item \code{\link{listEntities}}: Get a list of entities (i.e. tables) available to query
+#' \item \code{\link{listLoci}}: Get a list of loci that are stored in FASTA format directly in GEOME (not in the SRA)
+#' \item \code{\link{queryMetadata}}: Query metadata from the GEOME database
+#' \item \code{\link{querySanger}}: Query Sanger sequences directly from the GEOME database
 #' }
 #' 
 #' @section SRAtoolkit Functions:
 #' \itemize{
-#' \item \code{\link{fasterqDump()}}: Download or convert fastq data from NCBI Sequence Read Archive using multiple threads
-#' \item \code{\link{fastqDump()}}: Download or convert fastq data from NCBI Sequence Read Archive in a single thread (Windows compatible)
-#' \item \code{\link{prefetch()}}: Download data from NCBI Sequence Read Archive in .sra format using FASP or HTTPS protocols
+#' \item \code{\link{fasterqDump}}: Download or convert fastq data from NCBI Sequence Read Archive using multiple threads
+#' \item \code{\link{fastqDump}}: Download or convert fastq data from NCBI Sequence Read Archive in a single thread (Windows compatible)
+#' \item \code{\link{prefetch}}: Download data from NCBI Sequence Read Archive in .sra format using FASP or HTTPS protocols
 #' }
 #' 
 #' @section Example Usage:
@@ -80,7 +80,7 @@
 #' 
 #'  This two-step approach is generally faster, but Inggat could also have simply used fasterqDump() to download fastq
 #'  files directly from the SRA. If she has \href{https://downloads.asperasoft.com/connect2/}{Aspera Connect} installed, with the ascp executable in her $PATH, her download
-#'  would be even faster. If she was using Windows, she would have used \code{\link{fastqDump()}}, which is single-threaded. 
+#'  would be even faster. If she was using Windows, she would have used \code{\link{fastqDump}}, which is single-threaded. 
 #' 
 #' 
 #' @docType package
