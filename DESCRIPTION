@@ -1,10 +1,12 @@
 Package: geomedb
 Type: Package
 Title: Functions for Fetching 'GeOMe-db' Data
-Version: 1.0.0
-Date: 2019-05-11
-Author: RJ Ewing
-Maintainer: RJ Ewing<rj@rjewing.com>
+Version: 2.0.0
+Date: 2019-08-08
+Authors@R: c(person("RJ", "Ewing", email = "ewing.rj@gmail.com",
+                  role = c("aut", "cre")), 
+                  person("Eric", "Crandall", email = "eric.d.crandall@gmail.com",
+                  role = c("aut")))
 Description: The Genomic Observatory Metadatabase (GeOMe Database) is an open access repository for
     geographic and ecological metadata associated with sequenced samples. This package is used to retrieve
     GeOMe data for analysis. See <http://www.geome-db.org> for more information regarding GeOMe.

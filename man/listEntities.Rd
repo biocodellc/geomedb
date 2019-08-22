@@ -2,7 +2,7 @@
 % Please edit documentation in R/FimsUtils.R
 \name{listEntities}
 \alias{listEntities}
-\title{get a list of entities available to query}
+\title{Get a list of entities (i.e. tables) available to query}
 \usage{
 listEntities(projectId = NA)
 }
@@ -10,7 +10,7 @@ listEntities(projectId = NA)
 \item{projectId}{(optional) The project to fetch entities for. If not provided, the network entities will be returned.}
 }
 \description{
-get a list of entities available to query
+Get a list of entities (i.e. tables) available to query
 }
 \examples{
 \dontrun{

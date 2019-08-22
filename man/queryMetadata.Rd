@@ -2,36 +2,44 @@
 % Please edit documentation in R/FimsUtils.R
 \name{queryMetadata}
 \alias{queryMetadata}
-\title{fetch the FimsMetadata from the geome-db database}
+\title{Query metadata from the GEOME database.}
 \usage{
-queryMetadata(entity, projects = list(), expeditions = list(),
-  select = list(), query = "", source = NULL, page = 0,
-  limit = "10000")
+queryMetadata(entity = "Sample", projects = list(),
+  expeditions = list(), select = list("fastqMetadata"), query = "",
+  source = NULL, page = 0, limit = "10000")
 }
 \arguments{
-\item{entity}{The entity to query. One of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo')}
+\item{entity}{String. The entity or entities (tables) to query.
+One of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo','fastqMetadata'). Default is to query 'Sample'}
 
-\item{projects}{list of projects to include in the query. The default is all projects}
+\item{projects}{List of projects to include in the query. The default is all projects}
 
 \item{expeditions}{Only applicable if projects are specified. list of expeditions to include in the query. The default is all expeditions}
 
-\item{select}{list of entites to include in the response. The @param `entity` will always be included in the response.}
+\item{select}{List of entities to include in the response. One of ('Event', 'Sample', 'Tissue', 'Sample_Photo', 'Event_Photo','fastqMetadata')
+The @param `entity` will always be included in the response. `fastqMetadata` included by default.}
 
-\item{query}{FIMS Query DSL \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
-Ex. 'yearCollected >= 2017 and country = "Indonesia"'}
+\item{query}{FIMS Query statement \url{http://fims.readthedocs.io/en/latest/fims/query.html} query string.
+Ex. 'yearCollected >= 2017 and country = "Indonesia"'. Your query must include "_exists_:bioSample"
+to find samples that have associated data in the SRA.}
 
-\item{source}{list of column names to include in the data.frame results. If there is no entity prefix, the column
+\item{source}{List of column names to include in the data.frame results. If there is no entity prefix, the column
 is assumed to belong to the @param `entity`.
 Ex. list('Event.eventID', 'Event.locality', 'materialSampleID', 'bcid', 'Event.bcid')
       'materialSampleID' and 'bcid' in the above list are assumed to belong to the @param `entity`}
 
 \item{page}{The results page to return. Used to offset the page for large result sets. Defaults to 0.}
 
-\item{limit}{The number of results to include in the response. Defaults to 10000
-return: a dataframe object}
+\item{limit}{The number of results to include in the response. Defaults to 10000}
+}
+\value{
+a list object with each entity (table) as a dataframe object
 }
 \description{
-fetch the FimsMetadata from the geome-db database
+`queryMetadata` uses HTTP to query metadata from the GEOME database. If you are looking to download associated
+sequences from the SRA, you must include 'fastqMetadata' as one of the entities searched (this is done by default)
+and you should include "_exists_:bioSample" within your query statement to find only samples with associated SRA
+sequences
 }
 \examples{
 \dontrun{
@@ -43,5 +51,7 @@ df <- queryMetadata('Sample', select=list('Event', 'Tissue'), names=list("bcid")
                     query="yearCollected=2008")
 df <- queryMetadata('fastqMetadata', select=list('Event', 'Sample', 'Tissue'),
                     query="_exists_:bioSample")
+acaoli <- queryMetadata(entity = "fastqMetadata", 
+          query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event"))
 }
 }

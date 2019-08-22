@@ -2,12 +2,12 @@
 % Please edit documentation in R/FimsUtils.R
 \name{listProjects}
 \alias{listProjects}
-\title{get a list of projects}
+\title{Get a list of projects in GEOME}
 \usage{
 listProjects()
 }
 \description{
-get a list of projects
+Get a list of projects in GEOME
 }
 \examples{
 \dontrun{
