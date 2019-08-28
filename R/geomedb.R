@@ -43,17 +43,18 @@
 #' a DNAbin object as well as a FASTA file in her working directory.
 #' 
 #' \code{
-#' 
 #'
-#' acaoli_seqs <- querySanger(projects = 1, marker = "CYB", query = "genus = Acanthurus AND specificEpithet = olivaceus")
+#' acaoli_seqs <- querySanger(projects = 1, locus= "CYB", query = "genus = Acanthurus AND specificEpithet = olivaceus")
 #' 
 #' }
 #' 
 #' Then she repeats her query for samples that are associated with massively parallel sequencing reads in the SRA.
 #' \code{
 #' 
-#' acaoli_sra <- queryMetadata(entity = "fastqMetadata", 
-#' query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event","Sample"))
+#' acaoli_sra <- queryMetadata(
+#'     entity = "fastqMetadata", 
+#'     query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample",
+#'     select=c("Event","Sample"))
 #' 
 #' }
 #' 

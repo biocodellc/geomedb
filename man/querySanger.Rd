@@ -28,8 +28,10 @@ FASTA-formatted file.
 }
 \examples{
 \dontrun{
-data <- querySanger(locus = 'CYB', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"),
-                     query="yearCollected >= 2008")
+data <- querySanger(
+    locus = 'CYB', projects=list(1),
+    expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"),
+    query="yearCollected >= 2008")
  
 data <- querySanger(locus = 'CO1', query = "genus = Linckia AND specificEpithet = laevigata" )
 }

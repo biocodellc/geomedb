@@ -60,8 +60,10 @@
 #' @examples
 #' \donttest{
 #' # Run a query of GEOME first
-#' acaoli <- queryMetadata(entity = "fastqMetadata", 
-#' query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event"))
+#' acaoli <- queryMetadata(
+#'     entity = "fastqMetadata", 
+#'     query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", 
+#'     select=c("Event"))
 #' 
 #' #trim to 3 entries for expediency
 #' acaoli$fastqMetadata<-acaoli$fastqMetadata[1:3,]
@@ -70,8 +72,8 @@
 #' # Download straight from SRA, naming files with their locality and materialSampleID
 #' fasterqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "sra")
 #' 
-#' # A generally faster option is to run prefetch first, followed by fasterqDump, with cleanup = T to remove the 
-#' # prefetched .sra files.
+#' # A generally faster option is to run prefetch first, followed by fasterqDump, with cleanup = T to 
+#' # remove the prefetched .sra files.
 #' prefetch(queryMetadata_object = acaoli)
 #' fasterqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", cleanup = T)
 #' }
@@ -234,8 +236,10 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
 #' @examples
 #' \donttest{
 #' # Run a query of GEOME first
-#' acaoli <- queryMetadata(entity = "fastqMetadata", 
-#' query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event"))
+#' acaoli <- queryMetadata(
+#'     entity = "fastqMetadata", 
+#'     query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample",
+#'     select=c("Event"))
 #' 
 #' #trim to 3 entries for expediency
 #' acaoli$fastqMetadata<-acaoli$fastqMetadata[1:3,]
@@ -244,8 +248,8 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
 #' # Download straight from SRA, naming files with their locality and materialSampleID
 #' fastqDump(queryMetadata_object = acaoli, filenames = "locality_IDs", source = "sra")
 #' 
-#' # A generally faster option is to run prefetch first, followed by fastqDump, with cleanup = T to remove the 
-#' # prefetched .sra files.
+#' # A generally faster option is to run prefetch first, followed by fastqDump, with cleanup = T to 
+#' # remove the prefetched .sra files.
 #' prefetch(queryMetadata_object = acaoli)
 #' fastqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", cleanup = T)
 #' }
@@ -393,9 +397,11 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory 
 #' @examples
 #' \donttest{
 #' # Run a query of GEOME first
-#' acaoli <- queryMetadata(entity = "fastqMetadata", 
-#' query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event"))
-#' 
+#' acaoli <- queryMetadata(
+#'    entity = "fastqMetadata", 
+#'    query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample",
+#'    select=c("Event"))
+#'
 #' #trim to 3 entries for expediency
 #' acaoli$fastqMetadata<-acaoli$fastqMetadata[1:3,]
 #' acaoli$Event<-acaoli$Event[1:3,]

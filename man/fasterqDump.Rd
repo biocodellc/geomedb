@@ -66,8 +66,10 @@ you pass "-t /path/to/temp/dir" to arguments. \emph{Make sure to periodically de
 \examples{
 \donttest{
 # Run a query of GEOME first
-acaoli <- queryMetadata(entity = "fastqMetadata", 
-query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event"))
+acaoli <- queryMetadata(
+    entity = "fastqMetadata", 
+    query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", 
+    select=c("Event"))
 
 #trim to 3 entries for expediency
 acaoli$fastqMetadata<-acaoli$fastqMetadata[1:3,]
@@ -76,8 +78,8 @@ acaoli$Event<-acaoli$Event[1:3,]
 # Download straight from SRA, naming files with their locality and materialSampleID
 fasterqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "sra")
 
-# A generally faster option is to run prefetch first, followed by fasterqDump, with cleanup = T to remove the 
-# prefetched .sra files.
+# A generally faster option is to run prefetch first, followed by fasterqDump, with cleanup = T to 
+# remove the prefetched .sra files.
 prefetch(queryMetadata_object = acaoli)
 fasterqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", cleanup = T)
 }

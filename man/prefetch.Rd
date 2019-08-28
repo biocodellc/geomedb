@@ -45,8 +45,10 @@ You can alternatively pass the path to `ascp` by using arguments="-a path/to/asc
 \examples{
 \donttest{
 # Run a query of GEOME first
-acaoli <- queryMetadata(entity = "fastqMetadata", 
-query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event"))
+acaoli <- queryMetadata(
+   entity = "fastqMetadata", 
+   query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample",
+   select=c("Event"))
 
 #trim to 3 entries for expediency
 acaoli$fastqMetadata<-acaoli$fastqMetadata[1:3,]

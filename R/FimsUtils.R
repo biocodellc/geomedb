@@ -134,8 +134,10 @@ listLoci <- function() {
 #'                     query="yearCollected=2008")
 #' df <- queryMetadata('fastqMetadata', select=list('Event', 'Sample', 'Tissue'),
 #'                     query="_exists_:bioSample")
-#' acaoli <- queryMetadata(entity = "fastqMetadata", 
-#'           query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event"))
+#' acaoli <- queryMetadata(
+#'     entity = "fastqMetadata", 
+#'     query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample",
+#'     select=c("Event"))
 #' }
 #' @export
 queryMetadata <- function(entity = "Sample", projects=list(), expeditions=list(), select=list("fastqMetadata"), query="", source=NULL, page=0, limit="10000") {
@@ -178,8 +180,10 @@ queryMetadata <- function(entity = "Sample", projects=list(), expeditions=list()
 #' a FASTA-formatted file to your working directory.
 #' @examples
 #' \dontrun{
-#' data <- querySanger(locus = 'CYB', projects=list(1), expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"),
-#'                      query="yearCollected >= 2008")
+#' data <- querySanger(
+#'     locus = 'CYB', projects=list(1),
+#'     expeditions=list("acaach_CyB_JD", "acajap_CyB_JD"),
+#'     query="yearCollected >= 2008")
 #'  
 #' data <- querySanger(locus = 'CO1', query = "genus = Linckia AND specificEpithet = laevigata" )
 #' }

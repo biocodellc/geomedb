@@ -51,7 +51,9 @@ df <- queryMetadata('Sample', select=list('Event', 'Tissue'), names=list("bcid")
                     query="yearCollected=2008")
 df <- queryMetadata('fastqMetadata', select=list('Event', 'Sample', 'Tissue'),
                     query="_exists_:bioSample")
-acaoli <- queryMetadata(entity = "fastqMetadata", 
-          query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample", select=c("Event"))
+acaoli <- queryMetadata(
+    entity = "fastqMetadata", 
+    query = "genus = Acanthurus AND specificEpithet = olivaceus AND _exists_:bioSample",
+    select=c("Event"))
 }
 }
