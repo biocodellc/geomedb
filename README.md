@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/biocodellc/fimsR-access.svg?branch=master)](https://travis-ci.org/biocodellc/fimsR-access)
+
 # geome-db
 an R package for querying metadata and associated genetic sequences from GEOME
 
