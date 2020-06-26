@@ -18,8 +18,7 @@ Encoding: UTF-8
 Imports:
     ape,
     httr,
-    jsonlite,
-    data.table
+    jsonlite
 Depends:
     utils
 RoxygenNote: 6.1.1
