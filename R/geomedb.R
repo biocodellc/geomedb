@@ -5,7 +5,7 @@
 #' GeOMe data for analysis. See \url{http://www.geome-db.org} for more information regarding GeOMe.
 #' 
 #' The geomedb package provides functions for querying GEOME directly, as well as wrappers for
-#' \href{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/}{sratoolkit} executables. When used together, it is possible
+#' \href{https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc}{sratoolkit} executables. When used together, it is possible
 #' to download all metadata relevant to your query from GEOME and then download all associated SRA sequences.
 #' 
 #' @section GEOME Query Functions:

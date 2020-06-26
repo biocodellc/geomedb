@@ -45,7 +45,7 @@ entities queried was `fastqMetadata`
 }
 \details{
 The `fasterq-dump` tool uses temporary files and multi-threading to speed up the extraction of FASTQ from SRA-accessions.
-This function works best with sratoolkit functions of version 2.9.6 or greater. \href{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/}{SRAtoolkit} functions can (ideally)
+This function works best with sratoolkit functions of version 2.9.6 or greater. \href{https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc}{SRAtoolkit} functions can (ideally)
 be in your $PATH, or you can supply a path to them using the sratoolkitPath argument.
 
 `fasterqDump()` downloads files to the current working directory unless a different one is assigned through outputDirectory.
@@ -85,7 +85,7 @@ fasterqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", 
 }
 }
 \seealso{
-\url{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/} to download pre-compiled executables for sratoolkit or
+\url{https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc} to download pre-compiled executables for sratoolkit or
 \url{https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source>} to install from source
 
 This function will not work on Windows systems because fasterq-dump is not currently available for Windows. 

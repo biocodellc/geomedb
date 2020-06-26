@@ -5,7 +5,7 @@ an R package for querying metadata and associated genetic sequences from GEOME
 
  The Genomic Observatory Metadatabase (GEOME Database) is an open access repository for geographic and ecological metadata associated with sequenced samples. This package is used to retrieve GeOMe data for analysis. See [here](http://www.geome-db.org) for more information regarding GeOMe.
  
-The geomedb package provides functions for querying GEOME directly, as well as wrappers for [sratoolkit](https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/) executables. When used together, it is possible to download all metadata relevant to your query from GEOME and then download all associated SRA sequences.
+The geomedb package provides functions for querying GEOME directly, as well as wrappers for [sratoolkit](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc) executables. When used together, it is possible to download all metadata relevant to your query from GEOME and then download all associated SRA sequences.
 
 
 ## Installation

@@ -12,7 +12,7 @@
 #' entities queried was `fastqMetadata`
 #' 
 #' The `fasterq-dump` tool uses temporary files and multi-threading to speed up the extraction of FASTQ from SRA-accessions.
-#' This function works best with sratoolkit functions of version 2.9.6 or greater. \href{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/}{SRAtoolkit} functions can (ideally)
+#' This function works best with sratoolkit functions of version 2.9.6 or greater. \href{https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc}{SRAtoolkit} functions can (ideally)
 #' be in your $PATH, or you can supply a path to them using the sratoolkitPath argument.
 #' 
 #' `fasterqDump()` downloads files to the current working directory unless a different one is assigned through outputDirectory.
@@ -50,7 +50,7 @@
 #' 
 #' @return This function will not return anything within r. It simply downloads fastq files. It will print command line
 #' stdout to the console, and also provide a start and end time and amount of time elapsed during the download.
-#' @seealso \url{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/} to download pre-compiled executables for sratoolkit or
+#' @seealso \url{https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc} to download pre-compiled executables for sratoolkit or
 #' \url{https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source>} to install from source
 #' 
 #' This function will not work on Windows systems because fasterq-dump is not currently available for Windows. 
@@ -192,7 +192,7 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
 #' files from all samples returned by a \code{\link{queryMetadata}} query of GEOME, when one of the
 #' entities queried was `fastqMetadata`
 #' 
-#' This function works best with sratoolkit functions of version 2.9.6 or greater. \href{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/}{SRAtoolkit} functions can (ideally)
+#' This function works best with sratoolkit functions of version 2.9.6 or greater. \href{https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc}{SRAtoolkit} functions can (ideally)
 #' be in your $PATH, or you can supply a path to them using the sratoolkitPath argument.
 #' 
 #' `fastqDump()` downloads files to the current working directory unless a different one is assigned through outputDirectory.
@@ -225,7 +225,7 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
 #' 
 #' @return This function will not return anything within r. It simply downloads fastq files. It will print command line
 #' stdout to the console, and also provide a start and end time and amount of time elapsed during the download.
-#' @seealso \url{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/} to download pre-compiled executables for sratoolkit or
+#' @seealso \url{https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc} to download pre-compiled executables for sratoolkit or
 #' \url{https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source>} to install from source
 #' 
 #' See \code{\link{prefetch}} to download .sra files prior to converting them locally. This two step process works faster than
@@ -366,7 +366,7 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory 
 #' files from all samples returned by a \code{\link{queryMetadata}} query of GEOME, when one of the
 #' entities queried was `fastqMetadata`
 #' 
-#' This function works best with SRAtoolkit functions of version 2.9.6 or greater. \href{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/}{SRAtoolkit} functions can (ideally)
+#' This function works best with SRAtoolkit functions of version 2.9.6 or greater. \href{https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc}{SRAtoolkit} functions can (ideally)
 #' be in your $PATH, or you can supply a path to them using the sratoolkitPath argument.
 #' 
 #' It downloads files to the current working directory unless a different one is assigned through outputDirectory.
@@ -388,7 +388,7 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory 
 #' 
 #' @return This function will not return anything within r. It simply downloads .sra files. It will print command line
 #' stdout to the console, and also provide a start and end time and amount of time elapsed during the download.
-#' @seealso \url{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/} to download pre-compiled executables for sratoolkit or
+#' @seealso \url{https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc} to download pre-compiled executables for sratoolkit or
 #' \url{https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source>} to install from source
 #' 
 #' Use `prefetch` in combination with \code{\link{fastqDump}} or \code{\link{fasterqDump}} to convert .sra files to .fastq.

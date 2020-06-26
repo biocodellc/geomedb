@@ -1,3 +1,7 @@
+# geomedb 2.1
+
+This release fixes some package check issues and broken documentation links
+
 # geomedb 2.0
 
 This release adds functionality for fetching fastq files in R from the SRA

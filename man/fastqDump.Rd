@@ -46,7 +46,7 @@ files from all samples returned by a \code{\link{queryMetadata}} query of GEOME,
 entities queried was `fastqMetadata`
 }
 \details{
-This function works best with sratoolkit functions of version 2.9.6 or greater. \href{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/}{SRAtoolkit} functions can (ideally)
+This function works best with sratoolkit functions of version 2.9.6 or greater. \href{https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc}{SRAtoolkit} functions can (ideally)
 be in your $PATH, or you can supply a path to them using the sratoolkitPath argument.
 
 `fastqDump()` downloads files to the current working directory unless a different one is assigned through outputDirectory.
@@ -80,7 +80,7 @@ fastqDump(queryMetadata_object = acaoli, filenames = "IDs", source = "local", cl
 }
 }
 \seealso{
-\url{https://www.ncbi.nlm.nih.gov/sra/docs/toolkitsoft/} to download pre-compiled executables for sratoolkit or
+\url{https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc} to download pre-compiled executables for sratoolkit or
 \url{https://github.com/ncbi/sra-tools/wiki/Building-and-Installing-from-Source>} to install from source
 
 See \code{\link{prefetch}} to download .sra files prior to converting them locally. This two step process works faster than
