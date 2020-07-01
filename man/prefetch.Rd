@@ -4,8 +4,13 @@
 \alias{prefetch}
 \title{Download data from NCBI Sequence Read Archive in .sra format using FASP or HTTPS protocols}
 \usage{
-prefetch(queryMetadata_object, sratoolkitPath = "",
-  outputDirectory = ".", arguments = "-p 1", prefetchHelp = FALSE)
+prefetch(
+  queryMetadata_object,
+  sratoolkitPath = "",
+  outputDirectory = ".",
+  arguments = "-p 1",
+  prefetchHelp = FALSE
+)
 }
 \arguments{
 \item{queryMetadata_object}{A list object returned from `queryMetadata` where one of the 
@@ -43,7 +48,7 @@ package if the `ascp` executable is in your $PATH. Otherwise it will use HTTPS.
 You can alternatively pass the path to `ascp` by using arguments="-a path/to/ascp"
 }
 \examples{
-\donttest{
+\dontrun{
 # Run a query of GEOME first
 acaoli <- queryMetadata(
    entity = "fastqMetadata", 
