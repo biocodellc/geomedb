@@ -1,7 +1,9 @@
 
 # geome-db
+
 [![Build Status](https://travis-ci.org/biocodellc/fimsR-access.svg?branch=master)](https://travis-ci.org/biocodellc/fimsR-access)
-an R package for querying metadata and associated genetic sequences from GEOME
+
+"geomedb" is an R package for querying metadata and associated genetic sequences from GEOME
 
  The Genomic Observatory Metadatabase (GEOME Database) is an open access repository for geographic and ecological metadata associated with sequenced samples. This package is used to retrieve GeOMe data for analysis. See [here](http://www.geome-db.org) for more information regarding GeOMe.
  
