@@ -58,7 +58,7 @@
 #' 
 #' 
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Run a query of GEOME first
 #' acaoli <- queryMetadata(
 #'     entity = "fastqMetadata", 
@@ -234,7 +234,7 @@ fasterqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirector
 #' 
 #' 
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Run a query of GEOME first
 #' acaoli <- queryMetadata(
 #'     entity = "fastqMetadata", 
@@ -395,7 +395,7 @@ fastqDump <-function(queryMetadata_object, sratoolkitPath = "", outputDirectory 
 #' 
 #' 
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Run a query of GEOME first
 #' acaoli <- queryMetadata(
 #'    entity = "fastqMetadata", 

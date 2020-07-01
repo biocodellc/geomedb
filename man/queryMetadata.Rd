@@ -4,9 +4,16 @@
 \alias{queryMetadata}
 \title{Query metadata from the GEOME database.}
 \usage{
-queryMetadata(entity = "Sample", projects = list(),
-  expeditions = list(), select = list("fastqMetadata"), query = "",
-  source = NULL, page = 0, limit = "10000")
+queryMetadata(
+  entity = "Sample",
+  projects = list(),
+  expeditions = list(),
+  select = list("fastqMetadata"),
+  query = "",
+  source = NULL,
+  page = 0,
+  limit = "10000"
+)
 }
 \arguments{
 \item{entity}{String. The entity or entities (tables) to query.
