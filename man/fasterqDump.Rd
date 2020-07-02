@@ -4,9 +4,16 @@
 \alias{fasterqDump}
 \title{Download or convert fastq data from NCBI Sequence Read Archive using multiple threads}
 \usage{
-fasterqDump(queryMetadata_object, sratoolkitPath = "",
-  outputDirectory = "./", arguments = "-p", filenames = "accessions",
-  source = "sra", cleanup = FALSE, fasterqDumpHelp = FALSE)
+fasterqDump(
+  queryMetadata_object,
+  sratoolkitPath = "",
+  outputDirectory = "./",
+  arguments = "-p",
+  filenames = "accessions",
+  source = "sra",
+  cleanup = FALSE,
+  fasterqDumpHelp = FALSE
+)
 }
 \arguments{
 \item{queryMetadata_object}{A list object returned from `queryMetadata` where one of the 
@@ -64,7 +71,7 @@ Note that `fasterq-dump` will store temporary files in ~/ncbi/public/sra by defa
 you pass "-t /path/to/temp/dir" to arguments. \emph{Make sure to periodically delete these temporary files.}
 }
 \examples{
-\donttest{
+\dontrun{
 # Run a query of GEOME first
 acaoli <- queryMetadata(
     entity = "fastqMetadata", 
