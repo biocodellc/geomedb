@@ -4,16 +4,10 @@
 \alias{fastqDump}
 \title{Download or convert fastq data from NCBI Sequence Read Archive in a single thread (Windows compatible)}
 \usage{
-fastqDump(
-  queryMetadata_object,
-  sratoolkitPath = "",
-  outputDirectory = ".",
-  arguments = "-v --split-3",
-  filenames = "accessions",
-  source = "sra",
-  cleanup = FALSE,
-  fastqDumpHelp = FALSE
-)
+fastqDump(queryMetadata_object, sratoolkitPath = "",
+  outputDirectory = ".", arguments = "-v --split-3",
+  filenames = "accessions", source = "sra", cleanup = FALSE,
+  fastqDumpHelp = FALSE)
 }
 \arguments{
 \item{queryMetadata_object}{A list object returned from `queryMetadata` where one of the 

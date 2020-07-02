@@ -4,7 +4,8 @@
 \alias{querySanger}
 \title{Query Sanger sequences directly from the GEOME database}
 \usage{
-querySanger(locus, projects = list(), expeditions = list(), query = "")
+querySanger(locus, projects = list(), expeditions = list(),
+  query = "")
 }
 \arguments{
 \item{locus}{the locus to fetch. list of markers can be found by calling `listLoci()`}

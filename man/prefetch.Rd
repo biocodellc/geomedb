@@ -4,13 +4,8 @@
 \alias{prefetch}
 \title{Download data from NCBI Sequence Read Archive in .sra format using FASP or HTTPS protocols}
 \usage{
-prefetch(
-  queryMetadata_object,
-  sratoolkitPath = "",
-  outputDirectory = ".",
-  arguments = "-p 1",
-  prefetchHelp = FALSE
-)
+prefetch(queryMetadata_object, sratoolkitPath = "",
+  outputDirectory = ".", arguments = "-p 1", prefetchHelp = FALSE)
 }
 \arguments{
 \item{queryMetadata_object}{A list object returned from `queryMetadata` where one of the 

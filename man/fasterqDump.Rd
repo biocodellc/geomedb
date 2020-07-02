@@ -4,16 +4,9 @@
 \alias{fasterqDump}
 \title{Download or convert fastq data from NCBI Sequence Read Archive using multiple threads}
 \usage{
-fasterqDump(
-  queryMetadata_object,
-  sratoolkitPath = "",
-  outputDirectory = "./",
-  arguments = "-p",
-  filenames = "accessions",
-  source = "sra",
-  cleanup = FALSE,
-  fasterqDumpHelp = FALSE
-)
+fasterqDump(queryMetadata_object, sratoolkitPath = "",
+  outputDirectory = "./", arguments = "-p", filenames = "accessions",
+  source = "sra", cleanup = FALSE, fasterqDumpHelp = FALSE)
 }
 \arguments{
 \item{queryMetadata_object}{A list object returned from `queryMetadata` where one of the 

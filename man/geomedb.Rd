@@ -3,6 +3,7 @@
 \docType{package}
 \name{geomedb}
 \alias{geomedb}
+\alias{geomedb-package}
 \title{geomedb - an R package for querying metadata and associated genetic sequences from GEOME}
 \description{
 The Genomic Observatory Metadatabase (GEOME Database) is an open access repository for
