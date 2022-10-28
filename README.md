@@ -1,7 +1,7 @@
 
 # geomedb
 
-[![Build Status](https://travis-ci.org/biocodellc/fimsR-access.svg?branch=master)](https://travis-ci.org/biocodellc/fimsR-access)
+[![Build Status](https://travis-ci.com/biocodellc/geome.svg?branch=master)](https://travis-ci.com/biocodellc/geome)
 
 "geomedb" is an R package for querying metadata and associated genetic sequences from GEOME
 
