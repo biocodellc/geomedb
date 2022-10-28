@@ -1,5 +1,5 @@
 
-# geome-db
+# geomedb
 
 [![Build Status](https://travis-ci.org/biocodellc/fimsR-access.svg?branch=master)](https://travis-ci.org/biocodellc/fimsR-access)
 
