@@ -9,12 +9,8 @@ The geomedb package provides functions for querying GEOME directly, as well as w
 
 
 ## Installation
-To get the current released version from [CRAN](https://CRAN.R-project.org/package=geomedb) :
-```
-install.packages("geomedb")
-```
 
-To get the current development version from github:
+To get the geomedb R package from github:
 ```
 install.packages("devtools")
 library(devtools)
